@@ -7,7 +7,7 @@
     <ProjectGuid>14cd64f0-3f7f-4e32-98ec-9ef8c500f6ee</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{789894c7-04a9-4a11-a6b5-3f4435165112};{1b580a1a-fdb3-4b32-83e1-6407eb2722e6};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
-    <StartupFile>runserver.py</StartupFile>
+    <StartupFile>HotelGuru\run_app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -17,7 +17,8 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
     <RootNamespace>HotelGuru</RootNamespace>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env1|$(MSBuildProjectFullPath)</InterpreterId>
+    <WebBrowserPort>8888</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,48 +29,36 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="runserver.py" />
-    <Compile Include="HotelGuru\__init__.py" />
-    <Compile Include="HotelGuru\views.py" />
+    <Compile Include="HotelGuru\app\extensions.py" />
+    <Compile Include="HotelGuru\app\main\routes.py" />
+    <Compile Include="HotelGuru\app\models\__init__.py" />
+    <Compile Include="HotelGuru\app\__init__.py" />
+    <Compile Include="HotelGuru\config.py" />
+    <Compile Include="HotelGuru\run_app.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HotelGuru\" />
-    <Folder Include="HotelGuru\static\" />
-    <Folder Include="HotelGuru\static\content\" />
-    <Folder Include="HotelGuru\static\fonts\" />
-    <Folder Include="HotelGuru\static\scripts\" />
-    <Folder Include="HotelGuru\templates\" />
+    <Folder Include="HotelGuru\app\" />
+    <Folder Include="HotelGuru\app\main\" />
+    <Folder Include="HotelGuru\app\models\" />
+    <Folder Include="HotelGuru\app\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HotelGuru\.flaskenv" />
+    <Content Include="HotelGuru\app\main\__init__.py" />
     <Content Include="requirements.txt" />
-    <Content Include="HotelGuru\static\content\bootstrap.css" />
-    <Content Include="HotelGuru\static\content\bootstrap.min.css" />
-    <Content Include="HotelGuru\static\content\site.css" />
-    <Content Include="HotelGuru\static\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="HotelGuru\static\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="HotelGuru\static\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="HotelGuru\static\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="HotelGuru\static\scripts\bootstrap.js" />
-    <Content Include="HotelGuru\static\scripts\bootstrap.min.js" />
-    <Content Include="HotelGuru\static\scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="HotelGuru\static\scripts\jquery-1.10.2.js" />
-    <Content Include="HotelGuru\static\scripts\jquery-1.10.2.min.js" />
-    <Content Include="HotelGuru\static\scripts\jquery-1.10.2.min.map" />
-    <Content Include="HotelGuru\static\scripts\jquery.validate-vsdoc.js" />
-    <Content Include="HotelGuru\static\scripts\jquery.validate.js" />
-    <Content Include="HotelGuru\static\scripts\jquery.validate.min.js" />
-    <Content Include="HotelGuru\static\scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="HotelGuru\static\scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="HotelGuru\static\scripts\modernizr-2.6.2.js" />
-    <Content Include="HotelGuru\static\scripts\respond.js" />
-    <Content Include="HotelGuru\static\scripts\respond.min.js" />
-    <Content Include="HotelGuru\static\scripts\_references.js" />
-    <Content Include="HotelGuru\templates\about.html" />
-    <Content Include="HotelGuru\templates\contact.html" />
-    <Content Include="HotelGuru\templates\index.html" />
-    <Content Include="HotelGuru\templates\layout.html" />
+    <Content Include="HotelGuru\app\templates\index.html" />
   </ItemGroup>
   <ItemGroup>
+    <Interpreter Include="env1\">
+      <Id>env1</Id>
+      <Version>3.13</Version>
+      <Description>env1 (Python 3.13.12)</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
     <Interpreter Include="env\">
       <Id>env</Id>
       <Version>3.14</Version>
