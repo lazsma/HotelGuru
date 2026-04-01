@@ -8,7 +8,7 @@ from typing import List, Optional
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-#tˆbb - tˆbb kapcsolat miatt kell ez a tabla
+#t√∂bb - t√∂bb kapcsolat miatt kell ez a tabla
 UserRole = Table(
     "userroles",
     Base.metadata,
@@ -16,7 +16,7 @@ UserRole = Table(
     Column("role_id", ForeignKey("roles.id"))
 )
 
-#foglal·shoz -----------t·bla Ès id neveket ·t kell Ìrni
+#foglal√°shoz -----------t√°bla √©s id neveket √°t kell √≠rni
 
 # UserReservation = Table(
 #     "userreservations",
@@ -42,13 +42,13 @@ class User(db.Model):
     
 
 
-    #------------ki melyik hotelben dolgozik....hotel user kapcsolat--------------------
-    #hotel_id : Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"))
-    #hotel : Mapped[Optional["User"]] = relationship(back_populates="user",lazy=True) #lazy=True 
+   # ------------ki melyik hotelben dolgozik....hotel user kapcsolat--------------------
+    hotel_id : Mapped[Optional[int]] = mapped_column(ForeignKey("hotels.id"))
+    hotel : Mapped[Optional["Hotel"]] = relationship(back_populates="users",lazy=True) #lazy=True 
    
 
 
-    #-----------------Foglal·s----------------------
+    #-----------------Foglal√°s----------------------
 
 
 
