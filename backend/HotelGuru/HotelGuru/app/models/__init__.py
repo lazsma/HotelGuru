@@ -1,3 +1,6 @@
-#import app.models.user
-from app.models.address import Address
-from app.models.hotel import Hotel
+
+import app.models.hotel
+import app.models.user
+import app.models.address
+import app.models.role
+
