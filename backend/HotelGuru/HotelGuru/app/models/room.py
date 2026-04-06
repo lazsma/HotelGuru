@@ -14,6 +14,8 @@ class Room(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     room_number: Mapped[str] = mapped_column(String(30))
     price: Mapped[float] = mapped_column()
+    capacity: Mapped[int] = mapped_column()
+    room_description: Mapped[str] = mapped_column(String(255))
     
     hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)
     hotel: Mapped[List["Hotel"]] = relationship(back_populates="rooms")

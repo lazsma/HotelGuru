@@ -48,8 +48,20 @@ db.session.add(Hotel(name="Hotel Teszt", address=db.session.get(Address, 1)))
 #Room
 from app.models.room import Room
 db.session.add_all([
-    Room(room_number="101", price=10000, hotel=db.session.get(Hotel, 1)), 
-    Room(room_number="201", price=10000, hotel=db.session.get(Hotel, 1))
+    Room(
+        room_number="101", 
+        price=10000,
+        capacity=1,
+        room_description="Room with one bed",
+        hotel=db.session.get(Hotel, 1)
+    ), 
+    Room(
+        room_number="201", 
+        price=10000, 
+        capacity=2,
+        room_description="Room with two beds",
+        hotel=db.session.get(Hotel, 1)
+    )
 ])
 db.session.commit()
 
