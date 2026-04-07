@@ -1,5 +1,6 @@
 
 from __future__ import annotations
+from datetime import datetime, date
 
 from app import db
 from app import create_app
@@ -65,7 +66,13 @@ db.session.add_all([
 ])
 db.session.commit()
 
-
-
+#Reservation
+from app.models.reservation import Reservation
+db.session.add(Reservation(
+    user_id=1, 
+    room_id=1, 
+    check_in_date=date.today(), 
+    check_out_date=date.today(),
+    reservation_datetime=datetime.now()
+))
 db.session.commit()
-

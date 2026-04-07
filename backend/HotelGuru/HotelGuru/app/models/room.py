@@ -20,5 +20,7 @@ class Room(db.Model):
     hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)
     hotel: Mapped[List["Hotel"]] = relationship(back_populates="rooms")
     
+    reservations: Mapped[List["Reservation"]] = relationship(back_populates="room", lazy=True)
+
     def __repr__(self) -> str:
         return f"Room(id={self.id!r}, number={self.room_number!s}, price={self.price!r})"

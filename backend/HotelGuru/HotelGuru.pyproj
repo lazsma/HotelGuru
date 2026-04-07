@@ -33,6 +33,7 @@
     <Compile Include="HotelGuru\app\main\routes.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
     <Compile Include="HotelGuru\app\models\hotel.py" />
+    <Compile Include="HotelGuru\app\models\reservation.py" />
     <Compile Include="HotelGuru\app\models\role.py" />
     <Compile Include="HotelGuru\app\models\room.py" />
     <Compile Include="HotelGuru\app\models\user.py" />
