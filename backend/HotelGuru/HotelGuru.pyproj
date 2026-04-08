@@ -12,7 +12,7 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <LaunchProvider>Web launcher</LaunchProvider>
-    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <WebBrowserUrl>http://localhost/api</WebBrowserUrl>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
@@ -32,6 +32,7 @@
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
     <Compile Include="HotelGuru\app\models\hotel.py" />
+    <Compile Include="HotelGuru\app\models\reservation.py" />
     <Compile Include="HotelGuru\app\models\role.py" />
     <Compile Include="HotelGuru\app\models\room.py" />
     <Compile Include="HotelGuru\app\models\user.py" />

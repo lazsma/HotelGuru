@@ -36,26 +36,17 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(String(30))
     phone : Mapped[str] = mapped_column(String(30))
    
-
     roles: Mapped[List["Role"]] = relationship(secondary=UserRole, back_populates="users")
     
-
-
    # ------------ki melyik hotelben dolgozik....hotel user kapcsolat--------------------
     hotel_id : Mapped[Optional[int]] = mapped_column(ForeignKey("hotels.id"))
     hotel : Mapped[Optional["Hotel"]] = relationship(back_populates="users",lazy=True) #lazy=True 
    
-
-
-    #-----------------Foglalás----------------------
-
-
-
+    # Foglalás
+    reservations: Mapped[List["Reservation"]] = relationship(back_populates="user", lazy=True)
 
     address_id: Mapped[int] = mapped_column(ForeignKey("addresses.id"))
     address : Mapped["Address"] = relationship(back_populates="user", lazy=True)
-    
-
     
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, name={self.name!s}, email={self.email!r})"

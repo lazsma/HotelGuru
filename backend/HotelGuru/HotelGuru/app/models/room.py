@@ -9,25 +9,25 @@ class Room(db.Model):
     
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    # KiadhatÛ?
+    # Kiadhat√≥?
     is_available: Mapped[bool] = mapped_column(Boolean, default=True) 
 
-    # ¡llapot
+    # √Ållapot
     status: Mapped[str] = mapped_column(String(50), nullable=True) 
     
-    # MegjegyzÈs
+    # Megjegyz√©s
     note: Mapped[str] = mapped_column(Text, nullable=True)      
     
     # helye (pl. 1. emelet)
     location: Mapped[str] = mapped_column(String(100), nullable=True) 
 
-    # Szobasz·m
+    # Szobasz√°m
     room_number: Mapped[str] = mapped_column(String(10), unique=True)
     
-    # ¡r
+    # √År
     price: Mapped[float] = mapped_column(Float)                      
 
-    # TÌpus
+    # T√≠pus
     room_type: Mapped[str] = mapped_column(String(50))               
 
     # Kapcsolat a Hotellel
