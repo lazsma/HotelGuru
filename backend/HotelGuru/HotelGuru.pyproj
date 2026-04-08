@@ -31,9 +31,14 @@
   <ItemGroup>
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
+    <Compile Include="HotelGuru\app\models\hotel.py" />
+    <Compile Include="HotelGuru\app\models\role.py" />
+    <Compile Include="HotelGuru\app\models\room.py" />
+    <Compile Include="HotelGuru\app\models\user.py" />
     <Compile Include="HotelGuru\app\models\__init__.py" />
     <Compile Include="HotelGuru\app\__init__.py" />
     <Compile Include="HotelGuru\config.py" />
+    <Compile Include="HotelGuru\init_db.py" />
     <Compile Include="HotelGuru\run_app.py" />
   </ItemGroup>
   <ItemGroup>
