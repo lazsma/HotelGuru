@@ -30,7 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HotelGuru\app\extensions.py" />
-    <Compile Include="HotelGuru\app\main\routes.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
     <Compile Include="HotelGuru\app\models\__init__.py" />
     <Compile Include="HotelGuru\app\__init__.py" />
@@ -40,13 +39,11 @@
   <ItemGroup>
     <Folder Include="HotelGuru\" />
     <Folder Include="HotelGuru\app\" />
-    <Folder Include="HotelGuru\app\main\" />
     <Folder Include="HotelGuru\app\models\" />
     <Folder Include="HotelGuru\app\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HotelGuru\.flaskenv" />
-    <Content Include="HotelGuru\app\main\__init__.py" />
     <Content Include="requirements.txt" />
     <Content Include="HotelGuru\app\templates\index.html" />
   </ItemGroup>
