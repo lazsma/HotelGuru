@@ -29,6 +29,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HotelGuru\app\blueprints\reservation\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\__init__.py" />
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
     <Compile Include="HotelGuru\app\models\hotel.py" />
@@ -45,6 +50,8 @@
   <ItemGroup>
     <Folder Include="HotelGuru\" />
     <Folder Include="HotelGuru\app\" />
+    <Folder Include="HotelGuru\app\blueprints\" />
+    <Folder Include="HotelGuru\app\blueprints\reservation\" />
     <Folder Include="HotelGuru\app\models\" />
     <Folder Include="HotelGuru\app\templates\" />
   </ItemGroup>

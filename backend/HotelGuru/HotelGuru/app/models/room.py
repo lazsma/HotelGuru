@@ -3,6 +3,7 @@ from app.extensions import db
 from sqlalchemy import ForeignKey, Boolean, Float, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import String, Integer
+from typing import List
 
 class Room(db.Model):
     __tablename__ = "rooms"
@@ -32,6 +33,10 @@ class Room(db.Model):
 
     # Kapcsolat a Hotellel
     hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)
+    hotel: Mapped["Hotel"] = relationship(back_populates="rooms")
+
+    # Kapcsolat a Foglalásokkal
+    reservations: Mapped[List["Reservation"]] = relationship(back_populates="room", lazy=True)
 
     def __repr__(self) -> str:
         return f"Room(id={self.id}, number={self.room_number!r}, type={self.room_type!r})"

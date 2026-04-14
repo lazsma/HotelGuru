@@ -3,7 +3,7 @@ from datetime import datetime, date
 from app.extensions import db
 from sqlalchemy import ForeignKey  
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.types import String, Integer, DateTime
+import sqlalchemy.types as SATypes
 from typing import List, Optional
 
 class Reservation(db.Model):
@@ -17,9 +17,9 @@ class Reservation(db.Model):
     room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False)
     room: Mapped["Room"] = relationship(back_populates="reservations")
 
-    reservation_datetime: Mapped[datetime] = mapped_column(default=datetime.now())
-    check_in_date: Mapped[date] = mapped_column()
-    check_out_date: Mapped[date] = mapped_column()
+    reservation_datetime: Mapped[datetime] = mapped_column(SATypes.DateTime, default=datetime.now())
+    check_in_date: Mapped[date] = mapped_column(SATypes.Date)
+    check_out_date: Mapped[date] = mapped_column(SATypes.Date)
 
     def __repr__(self) -> str:
         return f"Reservation(id={self.id}, \
