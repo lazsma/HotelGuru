@@ -6,6 +6,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import String, Integer, DateTime
 from typing import List, Optional
 
+
+class StatusEnum(enum.Enum):
+    Pending  = 0,
+    Accepted  = 1,
+    Rejected = 2
+
 class Reservation(db.Model):
     __tablename__ = "reservations"
     
@@ -16,6 +22,8 @@ class Reservation(db.Model):
 
     room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False)
     room: Mapped["Room"] = relationship(back_populates="reservations")
+
+    status : Mapped[StatusEnum] = mapped_column()
 
     reservation_datetime: Mapped[datetime] = mapped_column(default=datetime.now())
     check_in_date: Mapped[date] = mapped_column()
