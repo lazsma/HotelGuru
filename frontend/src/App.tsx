@@ -1,58 +1,36 @@
-import './App.css'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import BookReservation from "./pages/BookReservation";
+import HotelList from "./pages/HotelList";
+import RoomList from "./pages/RoomList";
+
+// TODO: replace with real user data from authentication
+const user = {
+  name: "John Doe",
+  profileImage: "https://i.pravatar.cc/100"
+};
 
 function App() {
-  async function create_reservation(event: any) {
-    event.preventDefault();
-    const sample = {
-      user_id: 1,
-      room_id: 1,
-      check_in_date: "2026-04-14",
-      check_out_date: "2026-04-15"
-    }
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sample)
-    };
-
-    return fetch('/api/reservation/create', requestOptions)
-        .then(response => response.json())
-        .then(response => console.log(response))
-  }
-
   return (
-    <>
-      <section id="center">
-        <div>
-          <h1>Home Page</h1>
-        </div>
-        
-        <form id="reservation-form" onSubmit={create_reservation}>
-          <label htmlFor="userid">User Id</label>
-          <input id="userid" name="userid" type="text" defaultValue="1"/>
-          <br/>
-
-          <label htmlFor="roomid">Room Id</label>
-          <input id="roomid" name="roomid" type="text" defaultValue="1"/>
-          <br/>
-
-          <label htmlFor="checkin">Check In Date</label>
-          <input id="checkin" name="checkin" type="date" defaultValue="2026-04-14" />
-          <br/>
-          
-          <label htmlFor="checkout">Check Out Date</label>
-          <input id="checkout" name="checkout" type="date" defaultValue="2026-04-14" />
-          <br/>
-
-          <input id="form-button" type="submit" value="Create" />  
-        </form>
-      </section>
-
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout user={user} />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/hotels" element={<HotelList />} />
+          <Route path="/rooms" element={<RoomList />} />
+          <Route path="/book" element={<BookReservation />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

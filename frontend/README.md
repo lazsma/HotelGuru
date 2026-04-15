@@ -3,13 +3,17 @@
 Prerequirements:
  - install node version manager (windows: https://github.com/coreybutler/nvm-windows)
  
-# How to run
-**CONSOLE COMMANDS IN PROJECT ROOT FOLDER:**
+# How to setup
+The following commands need to be run only after checkout in the project folder.
  - `nvm install 20`
  - `nvm use 20`
  - `npm i -g corepack` ( You may need to add permission to run scripts by: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` )
- - `yarn`
- - `vite`
+ - `npm run dev`
+
+ # How to run
+To start the project you only need to run the following command in the project folder.
+ - `npm run dev`
+
 
  # Notes
  The backend is not started automatically
