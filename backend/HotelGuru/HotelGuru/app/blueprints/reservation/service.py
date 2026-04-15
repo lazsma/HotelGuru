@@ -12,8 +12,6 @@ class ReservationService:
     def create_reservation(request):
         try:
             reservation = Reservation(**request)
-            reservation.check_in_date = date.today()  # Példa: a bejelentkezés dátuma legyen a mai nap
-            reservation.check_out_date = date.today()  # Példa: a kijelentkezés dátuma legyen a mai nap (vagy késõbbi)
             db.session.add(reservation)
             db.session.commit()
         except Exception as ex:

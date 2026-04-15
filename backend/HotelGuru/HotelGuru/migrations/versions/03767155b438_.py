@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: febeb138ef90
+Revision ID: 03767155b438
 Revises: 
-Create Date: 2026-04-07 18:28:23.655293
+Create Date: 2026-04-15 15:02:44.188199
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'febeb138ef90'
+revision = '03767155b438'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,13 +39,17 @@ def upgrade():
     )
     op.create_table('rooms',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('room_number', sa.String(length=30), nullable=False),
+    sa.Column('is_available', sa.Boolean(), nullable=False),
+    sa.Column('status', sa.String(length=50), nullable=True),
+    sa.Column('note', sa.Text(), nullable=True),
+    sa.Column('location', sa.String(length=100), nullable=True),
+    sa.Column('room_number', sa.String(length=10), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
-    sa.Column('capacity', sa.Integer(), nullable=False),
-    sa.Column('room_description', sa.String(length=255), nullable=False),
+    sa.Column('room_type', sa.String(length=50), nullable=False),
     sa.Column('hotel_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['hotel_id'], ['hotels.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('room_number')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -67,6 +71,8 @@ def upgrade():
     sa.Column('reservation_datetime', sa.DateTime(), nullable=False),
     sa.Column('check_in_date', sa.Date(), nullable=False),
     sa.Column('check_out_date', sa.Date(), nullable=False),
+    sa.Column('status', sa.Enum('New', 'Approved', 'Cancelled', name='statusenum'), nullable=False),
+    sa.Column('people', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['room_id'], ['rooms.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
