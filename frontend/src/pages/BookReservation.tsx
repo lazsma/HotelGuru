@@ -1,6 +1,7 @@
 import { useState } from "react";
-import '../App.css'
 import { useNavigate } from "react-router";
+
+import "./BookReservation.css";
 
 function BookReservation() {
     const today = new Date().toISOString().split("T")[0];
@@ -58,49 +59,50 @@ function BookReservation() {
 
     return (
         <>
-            <section id="center">
+            <section>
             <div>
                 <h1>Book reservation</h1>
             </div>
             
             <form id="reservation-form" onSubmit={create_reservation}>
-                <label htmlFor="user_id">User Id</label>
-                <input 
-                id="user_id" name="user_id" type="text" 
-                value={formData.user_id} onChange={handleChange}/>
-                <br/>
+                <div className="reservation-row">
+                    <label htmlFor="user_id">User Id</label>
+                    <input 
+                        id="user_id" name="user_id" type="text" 
+                        value={formData.user_id} onChange={handleChange}/>
+                </div>
 
-                <label htmlFor="room_id">Room Id</label>
-                <input 
-                id="room_id" name="room_id" type="text" 
-                value={formData.room_id} onChange={handleChange}/>
-                <br/>
+                <div className="reservation-row">
+                    <label htmlFor="room_id">Room Id</label>
+                    <input 
+                        id="room_id" name="room_id" type="text" 
+                        value={formData.room_id} onChange={handleChange}/>
+                </div>
 
-                <label htmlFor="check_in_date">Check In Date</label>
-                <input 
-                id="check_in_date" name="check_in_date" type="date" 
-                value={formData.check_in_date} min={today} onChange={handleChange}/>
-                <br/>
+                <div className="reservation-row">
+                    <label htmlFor="check_in_date">Check In Date</label>
+                    <input 
+                        id="check_in_date" name="check_in_date" type="date" 
+                        value={formData.check_in_date} min={today} onChange={handleChange}/>
+                </div>
                 
-                <label htmlFor="check_out_date">Check Out Date</label>
-                <input 
-                id="check_out_date" name="check_out_date" type="date" 
-                value={formData.check_out_date} min={getNextDay(formData.check_in_date)} onChange={handleChange}/>
-                <br/>
+                <div className="reservation-row">
+                    <label htmlFor="check_out_date">Check Out Date</label>
+                    <input 
+                        id="check_out_date" name="check_out_date" type="date" 
+                        value={formData.check_out_date} min={getNextDay(formData.check_in_date)} onChange={handleChange}/>
+                </div>
 
-                <label htmlFor="people">Number of people</label>
-                <input 
-                id="people" name="people" type="text" 
-                value={formData.people} onChange={handleChange}/>
-                <br/>
+                <div className="reservation-row">
+                    <label htmlFor="people">Number of people</label>
+                    <input 
+                        id="people" name="people" type="text" 
+                        value={formData.people} onChange={handleChange}/>
+                </div>
 
-                <input id="form-button" type="submit" value="Create" />  
+                <input className="submit-button" id="form-button" type="submit" value="Book" />  
             </form>
             </section>
-
-
-            <div className="ticks"></div>
-            <section id="spacer"></section>
         </>
     )
 }
