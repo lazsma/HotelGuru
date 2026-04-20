@@ -28,7 +28,7 @@ class HotelService:
         Ha a hotel_id adott, csak ott keres, ha nincs, akkor az összes hotelben.
         """
         try:
-            # 1. Lekérdezzük a foglalt szobákat az adott intervallumban
+            
             subquery = select(Reservation.room_id).where(
                 and_(
                     Reservation.check_in_date < end_date,
@@ -36,7 +36,7 @@ class HotelService:
                 )
             )
 
-            # 2. Kiválasztjuk azokat a szobákat, amik nincsenek benne a foglaltak listájában és kiadhatóak
+            
             query = select(Room).where(
                 and_(
                     Room.is_available == True,
@@ -44,7 +44,7 @@ class HotelService:
                 )
             )
 
-            # 3. Ha van hotel_id, szűrünk rá
+            
             if hotel_id:
                 query = query.where(Room.hotel_id == hotel_id)
 

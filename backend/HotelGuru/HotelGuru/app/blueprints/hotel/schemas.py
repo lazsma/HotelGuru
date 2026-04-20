@@ -13,6 +13,6 @@ class HotelResponseSchema(Schema):
     address_id = fields.Integer()
 
 class RoomSearchQuerySchema(Schema):
-    """Séma a szabad szobák kereséséhez (Query paraméterek)"""
+    """Séma a szabad szobák kereséséhez"""
     start_date = fields.Date(required=True)
     end_date = fields.Date(required=True)
