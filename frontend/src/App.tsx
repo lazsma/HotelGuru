@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -24,8 +19,8 @@ function App() {
         <Route element={<Layout user={user} />}>
           <Route path="/" element={<Home />} />
           <Route path="/hotels" element={<HotelList />} />
-          <Route path="/rooms" element={<RoomList />} />
-          <Route path="/book" element={<BookReservation />} />
+          <Route path="/hotel/:hotelId/rooms" element={<RoomList />} />
+          <Route path="/book/:roomId" element={<BookReservation />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

@@ -17,7 +17,7 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
     <RootNamespace>HotelGuru</RootNamespace>
-    <InterpreterId>MSBuild|env2|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
     <WebBrowserPort>8888</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,10 +29,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HotelGuru\app\blueprints\hotel\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\__init__.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\service.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\__init__.py" />
     <Compile Include="HotelGuru\app\blueprints\__init__.py" />
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
@@ -51,6 +59,8 @@
     <Folder Include="HotelGuru\" />
     <Folder Include="HotelGuru\app\" />
     <Folder Include="HotelGuru\app\blueprints\" />
+    <Folder Include="HotelGuru\app\blueprints\hotel\" />
+    <Folder Include="HotelGuru\app\blueprints\room\" />
     <Folder Include="HotelGuru\app\blueprints\reservation\" />
     <Folder Include="HotelGuru\app\models\" />
     <Folder Include="HotelGuru\app\templates\" />
