@@ -17,7 +17,7 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
     <RootNamespace>HotelGuru</RootNamespace>
-    <InterpreterId>MSBuild|env_python_3.13|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env_python_313|$(MSBuildProjectFullPath)</InterpreterId>
     <WebBrowserPort>8888</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,18 +29,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HotelGuru\app\blueprints\user\routes.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="HotelGuru\app\blueprints\user\schemas.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="HotelGuru\app\blueprints\user\service.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="HotelGuru\app\blueprints\user\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="HotelGuru\app\blueprints\hotel\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\hotel\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\reservation\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\room\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\user\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\user\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\user\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\user\__init__.py" />
     <Compile Include="HotelGuru\app\blueprints\__init__.py" />
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
@@ -59,34 +63,20 @@
     <Folder Include="HotelGuru\" />
     <Folder Include="HotelGuru\app\" />
     <Folder Include="HotelGuru\app\blueprints\" />
+    <Folder Include="HotelGuru\app\blueprints\hotel\" />
+    <Folder Include="HotelGuru\app\blueprints\room\" />
+    <Folder Include="HotelGuru\app\blueprints\reservation\" />
     <Folder Include="HotelGuru\app\blueprints\user\" />
+    <Folder Include="HotelGuru\app\blueprints\user\__pycache__\" />
     <Folder Include="HotelGuru\app\models\" />
-    <Folder Include="HotelGuru\app\models\__pycache__\" />
     <Folder Include="HotelGuru\app\templates\" />
-    <Folder Include="HotelGuru\app\__pycache__\" />
-    <Folder Include="HotelGuru\ssh\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HotelGuru\.flaskenv" />
-    <Content Include="HotelGuru\app\models\__pycache__\address.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\address.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\hotel.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\hotel.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\reservation.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\reservation.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\role.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\role.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\room.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\room.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\user.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\user.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\__init__.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\models\__pycache__\__init__.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\__pycache__\extensions.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\__pycache__\extensions.cpython-314.pyc" />
-    <Content Include="HotelGuru\app\__pycache__\__init__.cpython-313.pyc" />
-    <Content Include="HotelGuru\app\__pycache__\__init__.cpython-314.pyc" />
-    <Content Include="HotelGuru\ssh\private-key.pem" />
+    <Content Include="HotelGuru\app\blueprints\user\__pycache__\routes.cpython-313.pyc" />
+    <Content Include="HotelGuru\app\blueprints\user\__pycache__\schemas.cpython-313.pyc" />
+    <Content Include="HotelGuru\app\blueprints\user\__pycache__\service.cpython-313.pyc" />
+    <Content Include="HotelGuru\app\blueprints\user\__pycache__\__init__.cpython-313.pyc" />
     <Content Include="requirements.txt" />
     <Content Include="HotelGuru\app\templates\index.html" />
   </ItemGroup>
@@ -100,10 +90,10 @@
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
       <Architecture>X64</Architecture>
     </Interpreter>
-    <Interpreter Include="env_python_3.13\">
-      <Id>env_python_3.13</Id>
+    <Interpreter Include="env_python_313\">
+      <Id>env_python_313</Id>
       <Version>3.13</Version>
-      <Description>env_python_3.13 (Python 3.13)</Description>
+      <Description>env_python_313 (Python 3.13)</Description>
       <InterpreterPath>Scripts\python.exe</InterpreterPath>
       <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
