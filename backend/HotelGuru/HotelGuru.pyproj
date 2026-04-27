@@ -17,7 +17,7 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
     <RootNamespace>HotelGuru</RootNamespace>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env3|$(MSBuildProjectFullPath)</InterpreterId>
     <WebBrowserPort>8888</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,10 +29,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HotelGuru\app\blueprints\admin\routes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HotelGuru\app\blueprints\hotel\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\service.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\receptionist\routes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HotelGuru\app\blueprints\reservation\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\service.py" />
@@ -41,7 +47,9 @@
     <Compile Include="HotelGuru\app\blueprints\room\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\room\service.py" />
     <Compile Include="HotelGuru\app\blueprints\room\__init__.py" />
-    <Compile Include="HotelGuru\app\blueprints\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\user\routes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HotelGuru\app\extensions.py" />
     <Compile Include="HotelGuru\app\models\address.py" />
     <Compile Include="HotelGuru\app\models\hotel.py" />
@@ -60,6 +68,9 @@
     <Folder Include="HotelGuru\app\" />
     <Folder Include="HotelGuru\app\blueprints\" />
     <Folder Include="HotelGuru\app\blueprints\hotel\" />
+    <Folder Include="HotelGuru\app\blueprints\admin\" />
+    <Folder Include="HotelGuru\app\blueprints\receptionist\" />
+    <Folder Include="HotelGuru\app\blueprints\user\" />
     <Folder Include="HotelGuru\app\blueprints\room\" />
     <Folder Include="HotelGuru\app\blueprints\reservation\" />
     <Folder Include="HotelGuru\app\models\" />
@@ -75,6 +86,15 @@
       <Id>env2</Id>
       <Version>3.14</Version>
       <Description>env2 (Python 3.14.3)</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+    <Interpreter Include="env3\">
+      <Id>env3</Id>
+      <Version>3.13</Version>
+      <Description>env3 (Python 3.13 (64-bit))</Description>
       <InterpreterPath>Scripts\python.exe</InterpreterPath>
       <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>

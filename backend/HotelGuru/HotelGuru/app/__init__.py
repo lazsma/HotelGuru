@@ -17,7 +17,21 @@ def create_app(config_class=Config):
     migrate = Migrate(app, db, render_as_batch=True)
     
     # Register blueprints here
-    from app.blueprints import bp as bp_default
-    app.register_blueprint(bp_default, url_prefix='/api')
+    #from app.blueprints import bp as bp_default
+    #app.register_blueprint(bp_default, url_prefix='/api')  
+
+    from app.blueprints.user.routes import bp as user_bp
+    from app.blueprints.receptionist.routes import bp as recep_bp
+    from app.blueprints.admin.routes import bp as admin_bp
+    from app.blueprints.hotel.routes import bp as hotel_bp
+    from app.blueprints.room.routes import bp as room_bp
+    from app.blueprints.reservation.routes import bp as reservation_bp
+    
+    app.register_blueprint(user_bp, url_prefix='/api/user')
+    app.register_blueprint(recep_bp, url_prefix='/api/receptionist')
+    app.register_blueprint(admin_bp, url_prefix='/api/admin')
+    app.register_blueprint(hotel_bp, url_prefix='/api/hotel')
+    app.register_blueprint(room_bp, url_prefix='/api/room')
+    app.register_blueprint(reservation_bp, url_prefix='/api/reservation')
 
     return app
