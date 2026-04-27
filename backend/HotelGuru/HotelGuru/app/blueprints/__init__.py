@@ -55,9 +55,15 @@ from app.blueprints.room import bp as bp_room
 bp.register_blueprint(bp_room, url_prefix='/room')
 
 # Register user
+from app.blueprints.user import bp as bp_user
+bp.register_blueprint(bp_user, url_prefix='/user')
 
-from app.models import *
+# Register admin
+from app.blueprints.admin import bp as bp_admin
+bp.register_blueprint(bp_admin, url_prefix='/admin')
 
 # Register receptionist
 from app.blueprints.receptionist import receptionist_bp
 bp.register_blueprint(receptionist_bp, url_prefix='/receptionist')
+
+from app.models import *

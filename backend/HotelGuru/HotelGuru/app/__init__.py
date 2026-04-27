@@ -18,6 +18,6 @@ def create_app(config_class=Config):
     
     # Register blueprints here
     from app.blueprints import bp as bp_default
-    app.register_blueprint(bp_default, url_prefix='/api')
+    app.register_blueprint(bp_default, url_prefix='/api')  
 
     return app
