@@ -12,8 +12,6 @@ class StatusEnum(enum.Enum):
     Approved = 1,
     Cancelled = 2
 
-
-
 class Reservation(db.Model):
     __tablename__ = "reservations"
     

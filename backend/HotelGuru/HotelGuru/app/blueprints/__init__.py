@@ -1,5 +1,5 @@
-#from flask import Blueprint
 from apiflask import APIBlueprint
+bp = APIBlueprint('main', __name__, tag="main")
 from app.extensions import auth
 from flask import current_app
 from authlib.jose import jwt

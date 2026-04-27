@@ -3,6 +3,8 @@ from app.blueprints import role_required
 from app.blueprints.user import bp
 from app.blueprints.user.schemas import UserResponseSchema, UserRequestSchema, UserLoginSchema, RoleSchema, AddressSchema
 from app.blueprints.user.service import UserService
+from app.blueprints.reservation.service import ReservationService
+
 from apiflask import HTTPError
 from apiflask.fields import String, Email, Nested, Integer, List
 
@@ -63,7 +65,7 @@ def user_list_user_roles():
     raise HTTPError(message=response, status_code=400)
 
 
-# visszaadja ki melyik hotelben dolgozik(NINCS KESZ !!!!! hotel bluprint kell)
+# visszaadja ki melyik hotelben dolgozik
 @bp.get('/myhotel')
 @bp.doc(tags=["user"])
 @bp.output(RoleSchema(many=True))

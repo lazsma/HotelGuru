@@ -1,6 +1,8 @@
 from app.extensions import db
 from flask import current_app
 from app.blueprints.user.schemas import PayloadSchema, UserResponseSchema, RoleSchema
+from app.blueprints.hotel.schemas import HotelResponseSchema
+
 from app.models.user import User
 from app.models.address import Address
 from app.models.role import Role
