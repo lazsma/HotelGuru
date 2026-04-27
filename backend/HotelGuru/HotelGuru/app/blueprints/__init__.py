@@ -5,6 +5,7 @@ from flask import current_app
 from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
+from functools import wraps
 
 bp = APIBlueprint('main', __name__, tag="main")
 
@@ -21,9 +22,11 @@ def verify_token(token):
         return data
     except Exception as ex:
         return None
-
+    
 def role_required(roles):
+    @wraps(roles)
     def wrapper(fn):
+        @wraps(fn)
         def decorated_function(*args, **kwargs):
             user_roles = [item["name"] for item in auth.current_user.get("roles")]
             for role in roles:

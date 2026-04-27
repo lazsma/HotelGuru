@@ -42,3 +42,8 @@ pydantic_core==2.41.5
 pydantic==2.12.5
 typing-inspection==0.4.2
 webargs==8.7.1
+Authlib==1.7.0
+cffi==2.0.0
+cryptography==47.0.0
+joserfc==1.6.4
+pycparser==3.0
