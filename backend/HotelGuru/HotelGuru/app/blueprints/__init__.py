@@ -6,10 +6,7 @@ from authlib.jose import jwt
 from datetime import datetime
 from apiflask import HTTPError
 
-@bp.route('/')
-def index():
-    return 'This is The Main Blueprint'
-
+bp = APIBlueprint('main', __name__, tag="main")
 
 @auth.verify_token
 def verify_token(token):
@@ -36,6 +33,9 @@ def role_required(roles):
         return decorated_function
     return wrapper
 
+# Register role
+from app.blueprints.user import bp as bp_user
+bp.register_blueprint(bp_user, url_prefix='/user')
 
 # Register address
 
@@ -47,14 +47,10 @@ bp.register_blueprint(bp_hotel, url_prefix='/hotel')
 from app.blueprints.reservation import bp as bp_reservation
 bp.register_blueprint(bp_reservation, url_prefix='/reservation')
 
-# Register role
-
 # Register room
 from app.blueprints.room import bp as bp_room
 bp.register_blueprint(bp_room, url_prefix='/room')
 
 # Register user
-from app.blueprints.user import bp as bp_user
-bp.register_blueprint(bp_user, url_prefix='/user')
 
 from app.models import *
