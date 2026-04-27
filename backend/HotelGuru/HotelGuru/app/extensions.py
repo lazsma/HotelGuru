@@ -7,3 +7,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class = Base)
 
 
+
+#Authentikáció
+from apiflask import HTTPTokenAuth
+auth = HTTPTokenAuth()
