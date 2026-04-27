@@ -11,9 +11,7 @@ from apiflask.fields import String, Email, Nested, Integer, List
 
 
 @bp.route('/')
-
 def index():
-
     return 'This is The Main Blueprint'
 
  
@@ -72,7 +70,7 @@ def user_list_user_roles():
 @bp.auth_required(auth)
 @role_required(["User"])
 @role_required(["Administrator","Janitor","Receptionist"]) 
-def user_list_user_roles():
+def user_list_user_roles_by_hotel():
     success, response = UserService.get_hotel(auth.current_user.get("user_id"))
     if success:
         return response, 200
@@ -99,8 +97,8 @@ def user_update_szemelyes(json_data):
 @role_required(["User"])
 @bp.input(UserRequestSchema, location="json")
 @bp.output(UserResponseSchema)
-def user_update_szemelyes(json_data):
-    success, response = UserService.user_update_szemelyes(auth.current_user.get("id"),json_data)
+def user_update_password(json_data):
+    success, response = UserService.user_update_password(auth.current_user.get("id"),json_data)
     if success:
         return str(response), 200
     raise HTTPError(message=response, status_code=400)
