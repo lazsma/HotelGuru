@@ -74,8 +74,8 @@ from app.models.reservation import Reservation, StatusEnum
 db.session.add(Reservation(
     user_id=admin_user.id, 
     room_id=room1.id, 
-    check_in_date=date.today(), 
-    check_out_date=date.today(),
+    check_in_date=date(2026, 5, 1), 
+    check_out_date=date(2026, 5, 2),
     reservation_datetime=datetime.now(),
     status=StatusEnum.New,
     people=1
