@@ -1,11 +1,27 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 import type { User } from "../types";
 
-export default function Home() {
+type LoginLocationState = {
+    from?: {
+        pathname?: string;
+        search?: string;
+        hash?: string;
+    };
+};
+
+export default function LoginPage() {
     const { loginUser } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    const { from } = (location.state ?? {}) as LoginLocationState;
+    const redirectParam = searchParams.get("redirect");
+    const stateRedirectPath = `${from?.pathname ?? "/"}${from?.search ?? ""}${from?.hash ?? ""}`;
+    const redirectPath = redirectParam?.startsWith("/") && !redirectParam.startsWith("//")
+        ? redirectParam
+        : stateRedirectPath;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -41,7 +57,7 @@ export default function Home() {
         };
 
         loginUser(data.token, loggedInUser);
-        navigate("/");
+        navigate(redirectPath, { replace: true });
     }
 
     return (

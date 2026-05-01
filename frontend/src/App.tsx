@@ -19,12 +19,12 @@ function App() {
           <Route path="/hotels" element={<HotelList />} />
           <Route path="/bookinfo" element={<ReservationInfo />} />
           <Route path="/hotel/:hotelId/rooms" element={<RoomList />} />
-          <Route path="/book/:roomId" element={<BookReservation />} />
           <Route path="/login" element={<LoginPage />} />
 
           <Route element={<LoginProtectedRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/reception" element={<ReceptionDashboard />} />
+            <Route path="/book/:roomId" element={<BookReservation />} />
           </Route>
         </Route>
       </Routes>

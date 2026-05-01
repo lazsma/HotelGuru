@@ -1,0 +1,32 @@
+.home-page {
+  padding: 48px 24px;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.hotel-list-button {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 8px;
+  background: #146c94;
+  color: #ffffff;
+  font: 600 16px/1 var(--sans);
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.hotel-list-button:hover {
+  background: #0f5a7c;
+  transform: translateY(-2px);
+}
+
+.hotel-list-button:active {
+  transform: translateY(0);
+}
+
+.hotel-list-button:focus-visible {
+  outline: 3px solid var(--accent-border);
+  outline-offset: 4px;
+}
