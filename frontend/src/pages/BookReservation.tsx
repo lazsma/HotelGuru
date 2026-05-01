@@ -92,7 +92,7 @@ function BookReservation() {
 
         return fetch('/api/reservation/create', requestOptions)
             .then(response => response.json())
-            .then(response => navigate("/bookinfo", { state: { reservation: response } }))
+            .then(response => navigate("/bookinfo", { state: { reservation: response, room: roomData } }))
             .then(response => console.log(response))
     }
 

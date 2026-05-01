@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import type { Room, User } from "../types";
 
 import { convertReservationEnum } from "../utility/Converter";
 import "./ReservationInfo.css";
@@ -7,14 +8,18 @@ import "./ReservationInfo.css";
 export default function ReservationInfo() {
     const location = useLocation();
     const [reservation, setReservation] = useState<any | null>(null);
+    const [room, setRoom] = useState<Room | null>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user } = useOutletContext<{ user: User }>();
     
     useEffect(() => {
         const passedReservation = location.state?.reservation;
+        const passedRoom = location.state?.room;
         if (passedReservation) {
             setReservation(passedReservation);
+            setRoom(passedRoom || null);
             setLoading(false);
         } else {
             setError("No reservation data provided");
@@ -51,29 +56,52 @@ export default function ReservationInfo() {
 
             <div style={{ display: "grid", gap: "10px" }}>
                 <div className="detailed-card">
+                    <h3>Felhasználó adatai</h3>
                     <div>
-                        <strong>User:</strong>
-                        <p> {reservation.user_id}</p>
+                        <strong>Név:</strong>
+                        <p>{user?.name}</p>
                     </div>
-                    <div>
-                        <strong>Room:</strong>
-                        <p> {reservation.room_id}</p>
+                </div>
+
+                {room && (
+                    <div className="detailed-card">
+                        <h3>Szoba adatai</h3>
+                        <div>
+                            <strong>Szobaszám:</strong>
+                            <p>{room.room_number}</p>
+                        </div>
+                        <div>
+                            <strong>Típus:</strong>
+                            <p>{room.room_type}</p>
+                        </div>
+                        <div>
+                            <strong>Ár:</strong>
+                            <p>{room.price} Ft / éj</p>
+                        </div>
+                        <div>
+                            <strong>Állapot:</strong>
+                            <p>{room.is_available ? "Foglalható" : `Nem foglalható (${room.status || 'Karbantartás'})`}</p>
+                        </div>
                     </div>
+                )}
+
+                <div className="detailed-card">
+                    <h3>Foglalás adatai</h3>
                     <div>
                         <strong>Date:</strong>
-                        <p> {reservation.check_in_date} - {reservation.check_out_date}</p>
+                        <p>{reservation.check_in_date} - {reservation.check_out_date}</p>
                     </div>
                     <div>
                         <strong>People:</strong>
-                        <p> {reservation.people}</p>
+                        <p>{reservation.people}</p>
                     </div>
                     <div>
                         <strong>Reservation made:</strong>
-                        <p> {reservation.reservation_datetime}</p>
+                        <p>{reservation.reservation_datetime}</p>
                     </div>
                     <div>
                         <strong>Status:</strong>
-                        <p> {convertReservationEnum(reservation.status)}</p>
+                        <p>{convertReservationEnum(reservation.status)}</p>
                     </div>
                 </div>
             </div>
