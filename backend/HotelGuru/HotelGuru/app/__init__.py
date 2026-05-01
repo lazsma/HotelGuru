@@ -10,7 +10,7 @@ def create_app(config_class=Config):
                docs_path="/swagger")
 
     app.config.from_object(config_class)
-    # Initialize Flask extensions here
+    # Initialize Flask extensions here 
     db.init_app(app)
     
     from flask_migrate import Migrate

@@ -5,6 +5,7 @@ from app.blueprints.room.schemas import (
     RoomUpdateDetailsSchema, 
     RoomStatusSchema
 )
+from app.blueprints.reservation.schemas import ReservationResponseSchema
 from app.blueprints.room.service import RoomService
 from apiflask import HTTPError
 
@@ -46,3 +47,12 @@ def set_status(room_id, json_data):
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
+
+@bp.get('/<int:room_id>/reservations')
+@bp.doc(tags=["room"], summary="A szoba foglalásainak lekérdezése")
+@bp.output(ReservationResponseSchema(many=True))
+def get_room_reservations(room_id):
+    success, response = RoomService.get_room_reservations(room_id)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=404)
