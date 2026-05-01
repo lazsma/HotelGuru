@@ -1,5 +1,7 @@
 from __future__ import annotations
 from datetime import datetime, date
+import stat
+
 from app import db
 from app import create_app
 from config import Config
@@ -52,30 +54,29 @@ db.session.commit()
 
 # Room
 from app.models.room import Room
-room1 = Room(room_number="101", price=15000, room_type="Standard", is_available=True, status=None, hotel=hotel1)
+room1 = Room(room_number="101", price=15000, room_type="Standard", is_available=True, status=None, hotel=hotel1, capacity=1)
 db.session.add_all([
     room1, 
-    Room(room_number="102", price=15000, room_type="Standard", is_available=False, status="Maintenance", hotel=hotel1),
-    Room(room_number="103", price=25000, room_type="Premium", is_available=True, status=None, hotel=hotel1),
+    Room(room_number="102", price=15000, room_type="Standard", is_available=False, status="Maintenance", hotel=hotel1, capacity=1),
+    Room(room_number="103", price=25000, room_type="Premium", is_available=True, status=None, hotel=hotel1, capacity=4),
     
-    Room(room_number="201", price=30000, room_type="Business", is_available=True, status=None, hotel=hotel2),
-    Room(room_number="202", price=30000, room_type="Business", is_available=False, status="Cleaning", hotel=hotel2),
-    Room(room_number="VIP-1", price=75000, room_type="Suite", is_available=True, status=None, hotel=hotel2),
-
-    Room(room_number="301", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3),
-    Room(room_number="302", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3)
+    Room(room_number="201", price=30000, room_type="Business", is_available=True, status=None, hotel=hotel2, capacity=2),
+    Room(room_number="202", price=30000, room_type="Business", is_available=False, status="Cleaning", hotel=hotel2, capacity=2),
+    Room(room_number="VIP-1", price=75000, room_type="Suite", is_available=True, status=None, hotel=hotel2, capacity=4),    
+    Room(room_number="301", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3, capacity=4),
+    Room(room_number="302", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3, capacity=4)
 ])
 db.session.commit()
 
-# Reservation
-from app.models.reservation import Reservation
+#Reservation
+from app.models.reservation import Reservation, StatusEnum
 db.session.add(Reservation(
     user_id=admin_user.id, 
     room_id=room1.id, 
-    check_in_date=date.today(), 
-    check_out_date=date.today(),
+    check_in_date=date(2026, 5, 1), 
+    check_out_date=date(2026, 5, 2),
     reservation_datetime=datetime.now(),
-    status="Confirmed",  # ÚJ: A foglalás státusza kötelező lett
-    people=2             # ÚJ: Az emberek száma is kötelező lett
+    status=StatusEnum.New,
+    people=1
 ))
 db.session.commit()

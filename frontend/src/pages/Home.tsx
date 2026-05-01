@@ -5,7 +5,7 @@ export default function Home() {
 
     return (
         <div>
-            <h2>Home page</h2>
+            <h2>Kezdőoldal</h2>
             <button onClick={() => navigate("/hotels")}>List Hotels</button>
         </div>
     );

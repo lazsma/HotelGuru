@@ -29,7 +29,10 @@ class Room(db.Model):
     price: Mapped[float] = mapped_column(Float)                      
 
     # Típus
-    room_type: Mapped[str] = mapped_column(String(50))               
+    room_type: Mapped[str] = mapped_column(String(50))       
+    
+    # Kapacitás
+    capacity: Mapped[int] = mapped_column(Integer)
 
     # Kapcsolat a Hotellel
     hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)

@@ -23,6 +23,7 @@ class RoomRequestSchema(Schema):
     price = fields.Float(required=True)
     room_type = fields.String(validate=OneOf([e.value for e in RoomType]), required=True)
     hotel_id = fields.Integer(required=True)
+    capacity = fields.Integer(required=True)
     # Generikus szolgáltatások listaként (opcionális)
     services = fields.List(fields.String(validate=OneOf([e.value for e in RoomServiceEnum])), allow_none=True)
 
@@ -36,6 +37,7 @@ class RoomResponseSchema(Schema):
     price = fields.Float()
     room_type = fields.String()
     hotel_id = fields.Integer()
+    capacity = fields.Integer()
     services = fields.List(fields.String())
 
 # Sémák a részleges frissítésekhez (update és status)
