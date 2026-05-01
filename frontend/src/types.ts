@@ -8,6 +8,7 @@ export interface Room {
     price: number;
     room_type: string;
     hotel_id: number;
+    capacity: number;
 }
 
 export interface User {

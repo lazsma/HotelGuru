@@ -54,18 +54,17 @@ db.session.commit()
 
 # Room
 from app.models.room import Room
-room1 = Room(room_number="101", price=15000, room_type="Standard", is_available=True, status=None, hotel=hotel1)
+room1 = Room(room_number="101", price=15000, room_type="Standard", is_available=True, status=None, hotel=hotel1, capacity=1)
 db.session.add_all([
     room1, 
-    Room(room_number="102", price=15000, room_type="Standard", is_available=False, status="Maintenance", hotel=hotel1),
-    Room(room_number="103", price=25000, room_type="Premium", is_available=True, status=None, hotel=hotel1),
+    Room(room_number="102", price=15000, room_type="Standard", is_available=False, status="Maintenance", hotel=hotel1, capacity=1),
+    Room(room_number="103", price=25000, room_type="Premium", is_available=True, status=None, hotel=hotel1, capacity=4),
     
-    Room(room_number="201", price=30000, room_type="Business", is_available=True, status=None, hotel=hotel2),
-    Room(room_number="202", price=30000, room_type="Business", is_available=False, status="Cleaning", hotel=hotel2),
-    Room(room_number="VIP-1", price=75000, room_type="Suite", is_available=True, status=None, hotel=hotel2),
-
-    Room(room_number="301", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3),
-    Room(room_number="302", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3)
+    Room(room_number="201", price=30000, room_type="Business", is_available=True, status=None, hotel=hotel2, capacity=2),
+    Room(room_number="202", price=30000, room_type="Business", is_available=False, status="Cleaning", hotel=hotel2, capacity=2),
+    Room(room_number="VIP-1", price=75000, room_type="Suite", is_available=True, status=None, hotel=hotel2, capacity=4),    
+    Room(room_number="301", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3, capacity=4),
+    Room(room_number="302", price=20000, room_type="Family", is_available=True, status=None, hotel=hotel3, capacity=4)
 ])
 db.session.commit()
 

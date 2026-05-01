@@ -52,7 +52,7 @@ export default function ReservationInfo() {
 
     return (
         <div>
-            <h2>Reservation - {reservation.id}</h2>
+            <h2>Foglalás - {reservation.id}</h2>
 
             <div style={{ display: "grid", gap: "10px" }}>
                 <div className="detailed-card">

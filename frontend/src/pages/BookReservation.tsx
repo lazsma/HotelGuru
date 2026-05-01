@@ -185,7 +185,7 @@ function BookReservation() {
         <>
             <section>
             <div>
-                <h1>Book reservation</h1>
+                <h1>Új foglalás</h1>
             </div>
             
             {loadingRoom && <div>Szoba adatok betöltése...</div>}
@@ -193,8 +193,7 @@ function BookReservation() {
             {dateError && <div style={{ color: 'red', marginBottom: '10px', padding: '10px', backgroundColor: '#ffe6e6', borderRadius: '4px' }}>{dateError}</div>}
             
             {roomData && (
-                <div className="room-details" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                    <h3>Kiválasztott szoba</h3>
+                <div className="room-details">
                     <p><strong>Szobaszám:</strong> {roomData.room_number}</p>
                     <p><strong>Típus:</strong> {roomData.room_type}</p>
                     <p><strong>Ár:</strong> {roomData.price} Ft / éj</p>
@@ -202,17 +201,12 @@ function BookReservation() {
                 </div>
             )}
 
-            {reservations.length > 0 && (
-                <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
-                    <h3>Foglaltság naptár</h3>
-                    <ReservationCalendar 
-                        reservations={reservations}
-                        onDatesSelected={handleCalendarDatesSelected}
-                        selectedCheckIn={formData.check_in_date}
-                        selectedCheckOut={formData.check_out_date}
-                    />
-                </div>
-            )}
+            <ReservationCalendar 
+                reservations={reservations}
+                onDatesSelected={handleCalendarDatesSelected}
+                selectedCheckIn={formData.check_in_date}
+                selectedCheckOut={formData.check_out_date}
+            />
             
             <form id="reservation-form" onSubmit={create_reservation}>
                 <div className="reservation-row">
