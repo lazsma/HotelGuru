@@ -27,6 +27,8 @@ function BookReservation() {
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [dateError, setDateError] = useState<string>("");
 
+    const roomCapacity = Number((roomData as { capacity?: number })?.capacity ?? 1)
+
     const navigate = useNavigate();
     const { roomId } = useParams<{ roomId: string }>();
     const { user } = useOutletContext<{ user: User }>();
@@ -64,6 +66,13 @@ function BookReservation() {
     }, [user]);
 
     useEffect(() => {
+        setFormData((prev) => ({
+            ...prev,
+            people: Math.min(Math.max(Number(prev.people) || 1, 1), roomCapacity)
+        }));
+    }, [roomCapacity]);
+
+    useEffect(() => {
         if (roomId) {
             setFormData((prev) => ({
                 ...prev,
@@ -80,6 +89,7 @@ function BookReservation() {
                 })
                 .then((data: Room) => {
                     setRoomData(data);
+                    console.log("Szoba adatok:", data);
                     setLoadingRoom(false);
                 })
                 .catch((err: Error) => {
@@ -133,7 +143,12 @@ function BookReservation() {
         setDateError("");
 
         setFormData((prev) => {
-            let updated = { ...prev, [name]: value };
+            let updated = {
+                ...prev,
+                [name]: name === "people"
+                    ? Math.min(Math.max(Number(value) || 1, 1), roomCapacity)
+                    : value
+            };
 
             if (name === "check_in_date") {
                 if (updated.check_out_date && updated.check_out_date <= value) {
@@ -157,6 +172,13 @@ function BookReservation() {
         });
     };
 
+    const handlePeopleChange = (change: number) => {
+        setFormData((prev) => ({
+            ...prev,
+            people: Math.min(Math.max((Number(prev.people) || 1) + change, 1), roomCapacity)
+        }));
+    };
+
     async function create_reservation(event: any) {
         event.preventDefault();
 
@@ -166,7 +188,15 @@ function BookReservation() {
             return;
         }
 
-        const jsonData = JSON.stringify(formData);
+        if (formData.people < 1 || formData.people > roomCapacity) {
+            setDateError(`Az emberek száma 1 és ${roomCapacity} között lehet.`);
+            return;
+        }
+
+        const jsonData = JSON.stringify({
+            ...formData,
+            people: Number(formData.people)
+        });
         console.log(jsonData);
 
         const requestOptions = {
@@ -197,6 +227,7 @@ function BookReservation() {
                     <p><strong>Szobaszám:</strong> {roomData.room_number}</p>
                     <p><strong>Típus:</strong> {roomData.room_type}</p>
                     <p><strong>Ár:</strong> {roomData.price} Ft / éj</p>
+                    <p><strong>Kapacitás:</strong> {roomCapacity} fő</p>
                     <p><strong>Állapot:</strong> {roomData.is_available ? "Foglalható" : `Nem foglalható (${roomData.status || 'Karbantartás'})`}</p>
                 </div>
             )}
@@ -209,11 +240,42 @@ function BookReservation() {
             />
             
             <form id="reservation-form" onSubmit={create_reservation}>
-                <div className="reservation-row">
-                    <label htmlFor="people">Number of people</label>
-                    <input 
-                        id="people" name="people" type="text" 
-                        value={formData.people} onChange={handleChange}/>
+                <div className="reservation-row people-selector-row">
+                    {(roomCapacity > 1) && 
+                        <div className="people-selector">
+                            <button
+                                type="button"
+                                className="people-button"
+                                onClick={() => handlePeopleChange(-1)}
+                                disabled={formData.people <= 1}
+                                aria-label="Vendégek számának csökkentése"
+                            >
+                                −
+                            </button>
+
+                            <input
+                                id="people"
+                                name="people"
+                                type="number"
+                                min="1"
+                                max={roomCapacity}
+                                value={formData.people}
+                                onChange={handleChange}
+                                className="people-input"
+                            />
+
+                            <button
+                                type="button"
+                                className="people-button"
+                                onClick={() => handlePeopleChange(1)}
+                                disabled={formData.people >= roomCapacity}
+                                aria-label="Vendégek számának növelése"
+                            >
+                                +
+                            </button>
+                        </div>
+                    }
+                    <small className="people-limit">Maximum {roomCapacity} fő foglalható ebbe a szobába.</small>
                 </div>
 
                 <input className="submit-button" id="form-button" type="submit" value="Book" />  
