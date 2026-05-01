@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useOutletContext } from "react-router-dom";
+import type { Room, User } from "../types";
 
 import "./BookReservation.css";
 
@@ -14,13 +15,51 @@ function BookReservation() {
 
     const [formData, setFormData] = useState({
         user_id: 1, //TODO: logged in user id
-        room_id: 1, // TODO: selected room id
+        room_id: 1, // selected room id from URL params
         check_in_date: today,
         check_out_date: getNextDay(today),
         people: 1
     });
 
-    const navigate = useNavigate(); 
+    const [roomData, setRoomData] = useState<Room | null>(null);
+    const [loadingRoom, setLoadingRoom] = useState<boolean>(false);
+
+    const navigate = useNavigate();
+    const { roomId } = useParams<{ roomId: string }>();
+    const { user } = useOutletContext<{ user: User }>();
+
+    useEffect(() => {
+        if (user?.id) {
+            setFormData((prev) => ({
+                ...prev,
+                user_id: user.id || 1
+            }));
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (roomId) {
+            setFormData((prev) => ({
+                ...prev,
+                room_id: parseInt(roomId)
+            }));
+
+            setLoadingRoom(true);
+            fetch(`/api/room/${roomId}`)
+                .then((response) => {
+                    if (!response.ok) throw new Error('Hiba a szoba adatainak lekérdezésekor');
+                    return response.json();
+                })
+                .then((data: Room) => {
+                    setRoomData(data);
+                    setLoadingRoom(false);
+                })
+                .catch((err: Error) => {
+                    console.error(err);
+                    setLoadingRoom(false);
+                });
+        }
+    }, [roomId]); 
 
 
     const handleChange = (e: any) => {
@@ -53,7 +92,7 @@ function BookReservation() {
 
         return fetch('/api/reservation/create', requestOptions)
             .then(response => response.json())
-            .then(() => navigate("/profile"))
+            .then(response => navigate("/bookinfo", { state: { reservation: response } }))
             .then(response => console.log(response))
     }
 
@@ -64,21 +103,19 @@ function BookReservation() {
                 <h1>Book reservation</h1>
             </div>
             
+            {loadingRoom && <div>Szoba adatok betöltése...</div>}
+            
+            {roomData && (
+                <div className="room-details" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                    <h3>Kiválasztott szoba</h3>
+                    <p><strong>Szobaszám:</strong> {roomData.room_number}</p>
+                    <p><strong>Típus:</strong> {roomData.room_type}</p>
+                    <p><strong>Ár:</strong> {roomData.price} Ft / éj</p>
+                    <p><strong>Állapot:</strong> {roomData.is_available ? "Foglalható" : `Nem foglalható (${roomData.status || 'Karbantartás'})`}</p>
+                </div>
+            )}
+            
             <form id="reservation-form" onSubmit={create_reservation}>
-                <div className="reservation-row">
-                    <label htmlFor="user_id">User Id</label>
-                    <input 
-                        id="user_id" name="user_id" type="text" 
-                        value={formData.user_id} onChange={handleChange}/>
-                </div>
-
-                <div className="reservation-row">
-                    <label htmlFor="room_id">Room Id</label>
-                    <input 
-                        id="room_id" name="room_id" type="text" 
-                        value={formData.room_id} onChange={handleChange}/>
-                </div>
-
                 <div className="reservation-row">
                     <label htmlFor="check_in_date">Check In Date</label>
                     <input 

@@ -7,6 +7,7 @@ class ReservationRequestSchema(Schema):
     room_id = fields.Integer()
     check_in_date = fields.Date()
     check_out_date = fields.Date()
+    people = fields.Integer()
     
 class ReservationResponseSchema(Schema):
     id = fields.Integer()
@@ -15,3 +16,5 @@ class ReservationResponseSchema(Schema):
     reservation_datetime = fields.String()
     check_in_date = fields.String()
     check_out_date = fields.String()
+    people = fields.Integer()
+    status = fields.String()

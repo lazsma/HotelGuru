@@ -6,7 +6,7 @@ export default function Layout({ user }: HeaderProps) {
     <>
       <Header user={user} />
       <main style={{ padding: "20px" }}>
-        <Outlet /> {/* pages render here */}
+        <Outlet context={{ user }} /> {/* pages render here */}
       </main>
     </>
   );

@@ -1,5 +1,7 @@
 from __future__ import annotations
 from datetime import datetime, date
+import stat
+
 from app import db
 from app import create_app
 from config import Config
@@ -67,15 +69,15 @@ db.session.add_all([
 ])
 db.session.commit()
 
-# Reservation
-from app.models.reservation import Reservation
+#Reservation
+from app.models.reservation import Reservation, StatusEnum
 db.session.add(Reservation(
     user_id=admin_user.id, 
     room_id=room1.id, 
     check_in_date=date.today(), 
     check_out_date=date.today(),
     reservation_datetime=datetime.now(),
-    status="Confirmed",  # ÚJ: A foglalás státusza kötelező lett
-    people=2             # ÚJ: Az emberek száma is kötelező lett
+    status=StatusEnum.New,
+    people=1
 ))
 db.session.commit()

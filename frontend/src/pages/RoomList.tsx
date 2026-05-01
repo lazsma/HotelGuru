@@ -1,17 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-export interface Room {
-    id: number;
-    is_available: boolean;
-    status: string | null;
-    note: string | null;
-    location: string | null;
-    room_number: string;
-    price: number;
-    room_type: string;
-    hotel_id: number;
-}
+import type { Room } from "../types";
 
 export default function RoomList() {
     const navigate = useNavigate();

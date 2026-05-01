@@ -2,6 +2,7 @@ from app.blueprints.reservation import bp
 from app.blueprints.reservation.schemas import ReservationRequestSchema, ReservationResponseSchema
 from app.blueprints.reservation.service import ReservationService
 from apiflask import HTTPError
+from app.models.reservation import StatusEnum
 
 @bp.post('/create')
 @bp.doc(tags=["reservation"])
@@ -9,6 +10,40 @@ from apiflask import HTTPError
 @bp.output(ReservationResponseSchema)
 def create_reservation(json_data):
     success, response = ReservationService.create_reservation(json_data)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+
+@bp.get('/list/<int:userid>')
+@bp.output(ReservationResponseSchema(many = True))
+def reservation_list_all(userid):
+    success, response = ReservationService.list_all(userid)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+@bp.get('/get/<int:reservation_id>')
+@bp.doc(tags=["reservation"])
+@bp.output(ReservationResponseSchema)
+def get_reservation(reservation_id):
+    success, response = ReservationService.get_reservation(reservation_id)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+@bp.post('/status/set/approved/<int:reservation_id>')
+@bp.doc(tags=["reservation"])
+def set_reservation_status_approved(reservation_id):
+    success, response = ReservationService.set_reservation_status(reservation_id, StatusEnum.Approved)
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
+@bp.post('/status/set/cancelled/<int:reservation_id>')
+@bp.doc(tags=["reservation"])
+def set_reservation_status_cancelled(reservation_id):
+    success, response = ReservationService.set_reservation_status(reservation_id, StatusEnum.Cancelled)
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)

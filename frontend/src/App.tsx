@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import BookReservation from "./pages/BookReservation";
 import HotelList from "./pages/HotelList";
 import RoomList from "./pages/RoomList";
+import ReservationInfo from "./pages/ReservationInfo";
 
 // TODO: replace with real user data from authentication
 const user = {
@@ -19,6 +20,7 @@ function App() {
         <Route element={<Layout user={user} />}>
           <Route path="/" element={<Home />} />
           <Route path="/hotels" element={<HotelList />} />
+          <Route path="/bookinfo" element={<ReservationInfo />} />
           <Route path="/hotel/:hotelId/rooms" element={<RoomList />} />
           <Route path="/book/:roomId" element={<BookReservation />} />
           <Route path="/profile" element={<Profile />} />
