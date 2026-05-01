@@ -36,7 +36,7 @@ class UserService:
         try:
            user = db.session.execute(select(User).filter_by(email=request["email"])).scalar_one()
            if not user.check_password(request["password"]):
-            return False, "Incorrect e-mail or password!"
+                return False, "Incorrect e-mail or password!"
            user_schema = UserResponseSchema().dump(user)
            user_schema["token"] = UserService.token_generate(user)
            return True, user_schema  

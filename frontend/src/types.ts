@@ -13,7 +13,8 @@ export interface Room {
 
 export interface User {
     name: string;
-    profileImage: string;
+    profileImage?: string;
+    email?: string;
     id?: number;
 }
 

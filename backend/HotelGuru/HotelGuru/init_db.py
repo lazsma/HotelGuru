@@ -1,6 +1,7 @@
 from __future__ import annotations
 from datetime import datetime, date
 import stat
+from werkzeug.security import generate_password_hash
 
 from app import db
 from app import create_app
@@ -44,7 +45,7 @@ admin_user = User(
     name="Admin", 
     email="admin@hotelguru.com", 
     szemely_igazolvany_szam=12345678, 
-    password="adminpass", 
+    password=generate_password_hash("adminpass"), 
     phone="1234567890", 
     address_id=addr1.id, 
     hotel_id=hotel1.id

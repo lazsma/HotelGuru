@@ -1,38 +1,39 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 import "./Header.css";
 
-type HeaderProps = {
-  user: {
-    name: string;
-    profileImage: string;
-    }
-};
+const defaultProfileImage = "https://i.pravatar.cc/100";
 
-export type { HeaderProps };
-
-export default function Header({ user }: HeaderProps) {
+export default function Header() {
     const navigate = useNavigate();
+    const { logoutUser, user } = useAuth();
+
+    function handleLogout() {
+        logoutUser();
+        navigate("/");
+    }
 
     return (
         <header className="header">
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
-
-            <div className="userSection"  style={{ display: "flex" }}>
+            <div className="userSection" style={{ display: "flex" }}>
                 <button className="reception-button" onClick={() => navigate("/reception")}>Recepció</button>
-                <p onClick={() => navigate("/profile")}>{user.name}</p>
-                
-                <img 
+                <p onClick={() => navigate(user ? "/profile" : "/login")}>{user?.name ?? "Bejelentkezés"}</p>
+
+                <img
                     className="img"
-                    src={user.profileImage}
+                    src={user?.profileImage ?? defaultProfileImage}
                     alt="profile"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate(user ? "/profile" : "/login")}
                 />
 
-                <button className="logout-button" onClick={() => navigate("/")}>
-                    Logout
-                </button>
+                {user && (
+                    <button className="logout-button" onClick={handleLogout}>
+                        Logout
+                    </button>
+                )}
             </div>
         </header>
     );
