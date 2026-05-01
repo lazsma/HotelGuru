@@ -18,20 +18,22 @@ export default function Header() {
         <header className="header">
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
-            <div className="userSection" style={{ display: "flex" }}>
-                <button className="reception-button" onClick={() => navigate("/reception")}>Recepció</button>
-                <p onClick={() => navigate(user ? "/profile" : "/login")}>{user?.name ?? "Bejelentkezés"}</p>
+            <div className="userSection">
+                <button className="header-button" onClick={() => navigate("/reception")}>Recepció</button>
+                <p className="header-user-name" onClick={() => navigate(user ? "/profile" : "/login")}>
+                    {user?.name ?? "Bejelentkezés"}
+                </p>
 
                 <img
-                    className="img"
+                    className="header-avatar"
                     src={user?.profileImage ?? defaultProfileImage}
                     alt="profile"
                     onClick={() => navigate(user ? "/profile" : "/login")}
                 />
 
                 {user && (
-                    <button className="logout-button" onClick={handleLogout}>
-                        Logout
+                    <button className="header-button header-button-secondary" onClick={handleLogout}>
+                        Kijelentkezés
                     </button>
                 )}
             </div>

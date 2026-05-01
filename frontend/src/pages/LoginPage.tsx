@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 import type { User } from "../types";
+import "./LoginPage.css";
 
 type LoginLocationState = {
     from?: {
@@ -25,62 +26,89 @@ export default function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    async function handleLogin(e: React.SubmitEvent) {
+    async function handleLogin(e: React.FormEvent) {
         e.preventDefault();
+        setError("");
 
         if (!email || !password) {
-            alert("Add meg az email címet és a jelszót.");
+            setError("Add meg az email címet és a jelszót.");
             return;
         }
 
-        const response = await fetch("/api/user/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email, password })
-        });
+        setIsSubmitting(true);
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => null);
-            console.error("Sikertelen bejelentkezés:", response.status, errorData);
-            alert("Sikertelen bejelentkezés");
-            return;
+        try {
+            const response = await fetch("/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                console.error("Sikertelen bejelentkezés:", response.status, errorData);
+                setError("Sikertelen bejelentkezés. Ellenőrizd az adatokat.");
+                return;
+            }
+
+            const data = await response.json();
+            const loggedInUser: User = {
+                id: data.id,
+                name: data.name ?? data.email ?? "Felhasználó",
+                email: data.email
+            };
+
+            loginUser(data.token, loggedInUser);
+            navigate(redirectPath, { replace: true });
+        } catch (err) {
+            console.error("Bejelentkezési hiba:", err);
+            setError("Nem sikerült kapcsolódni a szerverhez.");
+        } finally {
+            setIsSubmitting(false);
         }
-
-        const data = await response.json();
-        const loggedInUser: User = {
-            id: data.id,
-            name: data.name ?? data.email ?? "Felhasználó",
-            email: data.email
-        };
-
-        loginUser(data.token, loggedInUser);
-        navigate(redirectPath, { replace: true });
     }
 
     return (
-        <div>
-            <form onSubmit={handleLogin}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+        <section className="login-page">
+            <form className="login-form" onSubmit={handleLogin}>
+                <div className="login-heading">
+                    <h2>Bejelentkezés</h2>
+                    <p>Jelentkezz be a foglalásaid és a profilod kezeléséhez.</p>
+                </div>
 
-                <input
-                    type="password"
-                    placeholder="Jelszó"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                {error && <p className="login-error">{error}</p>}
 
-                <button type="submit">Bejelentkezés</button>
+                <label className="login-field">
+                    <span>Email</span>
+                    <input
+                        type="email"
+                        placeholder="pelda@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+
+                <label className="login-field">
+                    <span>Jelszó</span>
+                    <input
+                        type="password"
+                        placeholder="Jelszó"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </label>
+
+                <button className="login-submit" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Bejelentkezés..." : "Bejelentkezés"}
+                </button>
             </form>
-        </div>
+        </section>
     );
 }

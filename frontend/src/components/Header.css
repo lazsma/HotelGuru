@@ -1,57 +1,40 @@
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    gap: 16px;
+    padding: 12px 20px;
     background: #2c3e50;
     color: white;
 }
 
 .header-title {
-    margin-top: 10px;
+    margin: 0;
     color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
 
 .userSection {
-    position: "relative";
+    display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-img {
+.header-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.dropdown {
-    position: absolute;
-    right: 0;
-    top: 50px;
-    background: white;
-    color: black;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.username {
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-p {
-    vertical-align: center;
-    padding: 5px;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    object-fit: cover;
     cursor: pointer;
 }
 
-.logout-button {
-    padding: 5px;
-    border-radius: 3px;
+.header-user-name {
+    margin: 0;
+    padding: 6px 4px;
+    color: white;
+    font-weight: 600;
     cursor: pointer;
     background-color: white;
 }
@@ -70,4 +53,54 @@ p {
 
 .reception-button:hover {
     background-color: #2980b9;
+}
+}
+
+.header-button {
+    padding: 9px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    background: #146c94;
+    color: #ffffff;
+    font: 600 14px/1 var(--sans);
+    letter-spacing: 0;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.header-button:hover {
+    background: #0f5a7c;
+    border-color: rgba(255, 255, 255, 0.55);
+    transform: translateY(-1px);
+}
+
+.header-button:active {
+    transform: translateY(0);
+}
+
+.header-button:focus-visible,
+.header-avatar:focus-visible,
+.header-user-name:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 3px;
+}
+
+.header-button-secondary {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.header-button-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .userSection {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }
