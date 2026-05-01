@@ -18,9 +18,11 @@ export default function Header({ user }: HeaderProps) {
         <header className="header">
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
-            <div className="userSection"  style={{ display: "flex" }}>
-                <p onClick={() => navigate("/profile")}>{user.name}</p>
 
+            <div className="userSection"  style={{ display: "flex" }}>
+                <button className="reception-button" onClick={() => navigate("/reception")}>Recepció</button>
+                <p onClick={() => navigate("/profile")}>{user.name}</p>
+                
                 <img 
                     className="img"
                     src={user.profileImage}
