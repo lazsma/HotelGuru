@@ -32,18 +32,4 @@ def get_reservation(reservation_id):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-@bp.post('/status/set/approved/<int:reservation_id>')
-@bp.doc(tags=["reservation"])
-def set_reservation_status_approved(reservation_id):
-    success, response = ReservationService.set_reservation_status(reservation_id, StatusEnum.Approved)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)
 
-@bp.post('/status/set/cancelled/<int:reservation_id>')
-@bp.doc(tags=["reservation"])
-def set_reservation_status_cancelled(reservation_id):
-    success, response = ReservationService.set_reservation_status(reservation_id, StatusEnum.Cancelled)
-    if success:
-        return response, 200
-    raise HTTPError(message=response, status_code=400)

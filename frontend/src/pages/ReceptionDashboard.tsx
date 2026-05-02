@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './ReceptionDashboard.css';
 
 export default function ReceptionDashboard() {
     const [reservations, setReservations] = useState<any[]>([]);
@@ -73,12 +74,12 @@ export default function ReceptionDashboard() {
         }
     };
 
-    return (
-        <div className="reception-dashboard" style={{ padding: '20px', position: 'relative' }}>
+return (
+        <div className="reception-dashboard">
             <h2>Recepciós Pult - Foglalások kezelése</h2>
-            <table border={1} cellPadding={10} style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+            <table className="reception-table">
                 <thead>
-                    <tr style={{ backgroundColor: '#f0f0f0', textAlign: 'left' }}>
+                    <tr>
                         <th>ID</th>
                         <th>Vendég</th>
                         <th>Szoba</th>
@@ -92,38 +93,24 @@ export default function ReceptionDashboard() {
                     {reservations.map((res) => (
                         <tr key={res.id}>
                             <td>#{res.id}</td>
-                            
-                            {/* TODO: Majd lecserélni valós nevekre az ID-kat */}
                             <td>User ID: {res.user_id}</td>
                             <td>Room ID: {res.room_id}</td>
-                            
                             <td>{res.check_in_date}</td>
                             <td>{res.check_out_date}</td>
-                            
                             <td><strong>{formatStatus(res.status)}</strong></td>
-                            
-                            <td style={{ display: 'flex', gap: '10px' }}>
+                            <td className="action-buttons">
                                 {(res.status === 'New' || res.status === 'StatusEnum.New') && (
-                                    <button 
-                                        onClick={() => handleStatusChange(res.id, 'Approved')}
-                                        style={{ backgroundColor: '#2ecc71', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '3px', cursor: 'pointer' }}
-                                    >
+                                    <button className="btn btn-approve" onClick={() => handleStatusChange(res.id, 'Approved')}>
                                         Jóváhagy
                                     </button>
                                 )}
                                 {(res.status === 'Approved' || res.status === 'StatusEnum.Approved') && (
-                                    <button 
-                                        onClick={() => handleGenerateInvoice(res.id)}
-                                        style={{ backgroundColor: '#3498db', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '3px', cursor: 'pointer' }}
-                                    >
+                                    <button className="btn btn-invoice" onClick={() => handleGenerateInvoice(res.id)}>
                                         Számla
                                     </button>
                                 )}
                                 {res.status !== 'Cancelled' && res.status !== 'StatusEnum.Cancelled' && (
-                                    <button 
-                                        onClick={() => handleStatusChange(res.id, 'Cancelled')} 
-                                        style={{ backgroundColor: '#e74c3c', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '3px', cursor: 'pointer' }}
-                                    >
+                                    <button className="btn btn-cancel" onClick={() => handleStatusChange(res.id, 'Cancelled')}>
                                         Mégse
                                     </button>
                                 )}
@@ -132,7 +119,7 @@ export default function ReceptionDashboard() {
                     ))}
                     {reservations.length === 0 && (
                         <tr>
-                            <td colSpan={7} style={{ textAlign: 'center', padding: '20px' }}>
+                            <td colSpan={7} className="empty-row">
                                 Jelenleg nincs egyetlen foglalás sem a rendszerben.
                             </td>
                         </tr>
@@ -141,26 +128,23 @@ export default function ReceptionDashboard() {
             </table>
 
             {isModalOpen && invoiceData && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', minWidth: '350px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                        <h3 style={{ marginTop: 0, borderBottom: '2px solid #f0f0f0', paddingBottom: '10px' }}>Számla Részletei</h3>
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3 className="modal-header">Számla Részletei</h3>
                         <p><strong>Foglalás azonosító:</strong> #{invoiceData.reservation_id}</p>
                         <p><strong>Vendég ID:</strong> {invoiceData.user_id}</p>
                         <p><strong>Szoba ID:</strong> {invoiceData.room_id}</p>
                         
-                        <div style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '5px', marginTop: '20px' }}>
-                            <p style={{ margin: '5px 0' }}>Eltöltött éjszakák: <strong>{invoiceData.nights} éj</strong></p>
-                            <p style={{ margin: '5px 0' }}>Szállás díja: <strong>{invoiceData.room_cost.toLocaleString()} Ft</strong></p>
-                            <p style={{ margin: '5px 0' }}>Extra szolgáltatások: <strong>{invoiceData.extra_cost.toLocaleString()} Ft</strong></p>
-                            <hr style={{ border: '1px solid #ddd', margin: '15px 0' }} />
-                            <h3 style={{ margin: 0, color: '#e74c3c' }}>Fizetendő: {invoiceData.total_cost.toLocaleString()} Ft</h3>
+                        <div className="modal-details">
+                            <p>Eltöltött éjszakák: <strong>{invoiceData.nights} éj</strong></p>
+                            <p>Szállás díja: <strong>{invoiceData.room_cost.toLocaleString()} Ft</strong></p>
+                            <p>Extra szolgáltatások: <strong>{invoiceData.extra_cost.toLocaleString()} Ft</strong></p>
+                            <hr />
+                            <h3 className="modal-total">Fizetendő: {invoiceData.total_cost.toLocaleString()} Ft</h3>
                         </div>
 
-                        <div style={{ marginTop: '25px', display: 'flex', justifyContent: 'flex-end' }}>
-                            <button 
-                                onClick={() => setIsModalOpen(false)} 
-                                style={{ padding: '8px 15px', backgroundColor: '#95a5a6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                            >
+                        <div className="modal-footer">
+                            <button className="btn-close" onClick={() => setIsModalOpen(false)}>
                                 Bezárás
                             </button>
                         </div>
@@ -169,4 +153,4 @@ export default function ReceptionDashboard() {
             )}
         </div>
     );
-}
+};
