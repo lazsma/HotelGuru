@@ -45,9 +45,12 @@ class UserService:
          
 
     @staticmethod
-    def user_list_roles():
-        roles = db.session.query(Role).all()
-        return True, RoleSchema().dump(obj=roles, many=True)
+    def list_all_roles():
+        try:
+            roles = db.session.query(Role).all()
+            return True, RoleSchema().dump(obj=roles, many=True)
+        except Exception as ex:
+            return False, "Error while listing all roles!"
     
     @staticmethod
     def list_user_roles(uid):

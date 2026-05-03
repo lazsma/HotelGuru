@@ -29,7 +29,7 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     name: Mapped[str] = mapped_column(String(30))
-    email: Mapped[Optional[str]]
+    email: Mapped[str] = mapped_column(String(50), unique=True)
 
     szemely_igazolvany_szam : Mapped[int]
 

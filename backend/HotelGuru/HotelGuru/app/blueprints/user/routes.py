@@ -8,13 +8,6 @@ from app.blueprints.reservation.service import ReservationService
 from apiflask import HTTPError
 from apiflask.fields import String, Email, Nested, Integer, List
 
-
-
-@bp.route('/')
-def index():
-    return 'This is The Main Blueprint'
-
- 
 # Uj felhasznalo regisztralasa User role-ban
 @bp.post('/registrate')
 @bp.doc(tags=["user"])
@@ -26,7 +19,7 @@ def user_registrate(json_data):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-#Beleptetes  
+# Beleptetes  
 @bp.post('/login')
 @bp.doc(tags=["user"])
 @bp.input(UserLoginSchema, location="json")
@@ -37,20 +30,19 @@ def user_login(json_data):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-#Minden role kilistazasa, csak aki neke van (Admin es User) hozzaferese
+# Minden role kilistazasa, csak aki neke van (Admin es User) hozzaferese
 @bp.get('/roles')
 @bp.auth_required(auth) 
 @bp.doc(tags=["user"])
 @bp.output(RoleSchema(many=True))
-@role_required(["User"])
 @role_required(["Administrator"])
 def user_list_roles():
-    success, response = UserService.user_list_roles()
+    success, response = UserService.list_all_roles()
     if success:
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
-#Sajat role kilistazasa
+# Sajat role(-ok) kilistazasa
 @bp.get('/myroles')
 @bp.doc(tags=["user"])
 @bp.output(RoleSchema(many=True))
@@ -67,7 +59,6 @@ def user_list_user_roles():
 @bp.doc(tags=["user"])
 @bp.output(RoleSchema(many=True))
 @bp.auth_required(auth)
-@role_required(["User"])
 @role_required(["Administrator","Janitor","Receptionist"]) 
 def user_list_user_roles_by_hotel():
     success, response = UserService.get_hotel(auth.current_user.get("user_id"))

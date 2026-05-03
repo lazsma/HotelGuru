@@ -16,7 +16,7 @@ function normalizeRoles(data: RoleResponse): string[] {
 }
 
 export function useUserRoles() {
-  const { token } = useAuth();
+  const { logoutUser, token } = useAuth();
   const [roles, setRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(Boolean(token));
 
@@ -37,6 +37,12 @@ export function useUserRoles() {
           },
         });
 
+        if (response.status === 401) {
+          logoutUser();
+          setRoles([]);
+          return;
+        }
+
         if (!response.ok) {
           setRoles([]);
           return;
@@ -50,7 +56,7 @@ export function useUserRoles() {
     }
 
     fetchRoles();
-  }, [token]);
+  }, [logoutUser, token]);
 
   return { roles, loading };
 }
