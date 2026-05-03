@@ -9,6 +9,7 @@ import ReservationInfo from "./pages/ReservationInfo";
 import ReceptionDashboard from './pages/ReceptionDashboard';
 import LoginProtectedRoute from "./components/LoginProtectedRoute";
 import LoginPage from "./pages/LoginPage";
+import RoleProtectedRoute from "./components/RoleProtectedRoute";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
 
           <Route element={<LoginProtectedRoute />}>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/reception" element={<ReceptionDashboard />} />
+            <Route element={<RoleProtectedRoute allowedRoles={["Receptionist"]} />}>
+              <Route path="/reception" element={<ReceptionDashboard />} />
+            </Route>
             <Route path="/book/:roomId" element={<BookReservation />} />
           </Route>
         </Route>

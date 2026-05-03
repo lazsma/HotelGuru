@@ -55,7 +55,6 @@ def user_list_roles():
 @bp.doc(tags=["user"])
 @bp.output(RoleSchema(many=True))
 @bp.auth_required(auth)
-@role_required(["User"])
 def user_list_user_roles():
     success, response = UserService.list_user_roles(auth.current_user.get("user_id"))
     if success:

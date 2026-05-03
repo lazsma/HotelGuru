@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import { useUserRoles } from "../utility/UseUserRole";
 
 import "./Header.css";
 
@@ -8,6 +9,8 @@ const defaultProfileImage = "https://i.pravatar.cc/100";
 export default function Header() {
     const navigate = useNavigate();
     const { logoutUser, user } = useAuth();
+    const { roles } = useUserRoles();
+    const canOpenReception = roles.includes("Receptionist");
 
     function handleLogout() {
         logoutUser();
@@ -19,7 +22,7 @@ export default function Header() {
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
             <div className="userSection">
-                <div className="header-actions">
+                {canOpenReception && (<div className="header-actions">
                     <button
                         type="button"
                         className="header-button header-button-primary"
@@ -28,7 +31,7 @@ export default function Header() {
                     >
                         Recepció
                     </button>
-                </div>
+                </div>)}
 
                 <p className="header-user-name" onClick={() => navigate(user ? "/profile" : "/login")}>
                     {user?.name ?? "Bejelentkezés"}
