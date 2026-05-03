@@ -7,13 +7,13 @@ Prerequirements:
 The following commands need to be run only after checkout in the project folder.
  - `nvm install 20`
  - `nvm use 20`
- - `npm i -g corepack` ( You may need to add permission to run scripts by: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` )
+ - (Optional) `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted`
+ - `npm i -g corepack`
  - `npm run dev`
 
  # How to run
 To start the project you only need to run the following command in the project folder.
  - `npm run dev`
-
 
  # Notes
  The backend is not started automatically

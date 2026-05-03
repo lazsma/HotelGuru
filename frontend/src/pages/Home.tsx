@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 export default function Home() {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="home-page">
             <h2>Kezdőoldal</h2>
-            <button onClick={() => navigate("/hotels")}>List Hotels</button>
+            <button className="hotel-list-button" onClick={() => navigate("/hotels")}>
+                <span>Hotelek megtekintése</span>
+            </button>
         </div>
     );
 }

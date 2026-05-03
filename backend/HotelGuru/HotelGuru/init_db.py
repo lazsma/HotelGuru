@@ -1,6 +1,7 @@
 from __future__ import annotations
 from datetime import datetime, date
 import stat
+from werkzeug.security import generate_password_hash
 
 from app import db
 from app import create_app
@@ -14,11 +15,15 @@ db.create_all()
 
 # Role
 from app.models.role import Role
+admin_role = Role(name="Administrator")
+receptionist_role = Role(name="Receptionist")
+janitor_role = Role(name="Janitor")
+user_role = Role(name="User")
 db.session.add_all([ 
-    Role(name="Administrator"), 
-    Role(name="Receptionist"), 
-    Role(name="Janitor"), 
-    Role(name="User") 
+    admin_role, 
+    receptionist_role, 
+    janitor_role, 
+    user_role 
 ])
 db.session.commit()
 
@@ -44,12 +49,45 @@ admin_user = User(
     name="Admin", 
     email="admin@hotelguru.com", 
     szemely_igazolvany_szam=12345678, 
-    password="adminpass", 
+    password=generate_password_hash("adminpass"), 
     phone="1234567890", 
     address_id=addr1.id, 
-    hotel_id=hotel1.id
+    hotel_id=hotel1.id,
+    roles=[admin_role, receptionist_role, janitor_role, user_role]
 )
 db.session.add(admin_user)
+receptionist_user = User(
+    name="Receptionist",
+    email="receptionist@hotelguru.com",
+    szemely_igazolvany_szam=87654321,
+    password=generate_password_hash("receptionistpass"),
+    phone="0987654321",
+    address_id=addr2.id,
+    hotel_id=hotel2.id,
+    roles=[receptionist_role, user_role]
+)
+db.session.add(receptionist_user)
+janior_user = User(
+    name="Janitor",
+    email="janitor@hotelguru.com",
+    szemely_igazolvany_szam=11223344,
+    password=generate_password_hash("janitorpass"),
+    phone="1112223333",
+    address_id=addr3.id,
+    hotel_id=hotel3.id,
+    roles=[janitor_role, user_role]
+)
+db.session.add(janior_user)
+user_user = User(
+    name="User",
+    email="user@hotelguru.com",
+    szemely_igazolvany_szam=44332211,
+    password=generate_password_hash("userpass"),
+    phone="3332221111",
+    address_id=addr1.id,
+    roles=[user_role]
+)
+db.session.add(user_user)
 db.session.commit()
 
 # Room

@@ -1,38 +1,59 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import { useUserRoles } from "../utility/UseUserRole";
 
 import "./Header.css";
 
-type HeaderProps = {
-  user: {
-    name: string;
-    profileImage: string;
-    }
-};
+const defaultProfileImage = "https://i.pravatar.cc/100";
 
-export type { HeaderProps };
-
-export default function Header({ user }: HeaderProps) {
+export default function Header() {
     const navigate = useNavigate();
+    const { logoutUser, user } = useAuth();
+    const { roles } = useUserRoles();
+    const canOpenReception = roles.includes("Receptionist");
+
+    function handleLogout() {
+        logoutUser();
+        navigate("/");
+    }
 
     return (
         <header className="header">
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
+            <div className="userSection">
+                {canOpenReception && (<div className="header-actions">
+                    <button
+                        type="button"
+                        className="header-button header-button-primary"
+                        onClick={() => navigate("/reception")}
+                        aria-label="Recepció megnyitása"
+                    >
+                        Recepció
+                    </button>
+                </div>)}
 
-            <div className="userSection"  style={{ display: "flex" }}>
-                <button className="reception-button" onClick={() => navigate("/reception")}>Recepció</button>
-                <p onClick={() => navigate("/profile")}>{user.name}</p>
-                
-                <img 
-                    className="img"
-                    src={user.profileImage}
+                <p className="header-user-name" onClick={() => navigate(user ? "/profile" : "/login")}>
+                    {user?.name ?? "Bejelentkezés"}
+                </p>
+
+                <img
+                    className="header-avatar"
+                    src={user?.profileImage ?? defaultProfileImage}
                     alt="profile"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate(user ? "/profile" : "/login")}
                 />
 
-                <button className="logout-button" onClick={() => navigate("/")}>
-                    Logout
-                </button>
+                {user && (
+                    <button
+                        type="button"
+                        className="header-button header-button-secondary"
+                        onClick={handleLogout}
+                        aria-label="Kijelentkezés"
+                    >
+                        Kijelentkezés
+                    </button>
+                )}
             </div>
         </header>
     );
