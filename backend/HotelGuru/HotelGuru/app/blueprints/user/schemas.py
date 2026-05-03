@@ -14,7 +14,6 @@ class AddressSchema(Schema):
     postalcode = fields.Integer()
 
 class UserRequestSchema(Schema):
-        
     name = fields.String()
     email = String(validate=Email())
     szemely_igazolvany_szam=fields.Integer()

@@ -3,7 +3,7 @@ from app.blueprints import role_required
 from app.blueprints.user import bp
 from app.blueprints.user.schemas import UserResponseSchema, UserRequestSchema, UserLoginSchema, RoleSchema, AddressSchema
 from app.blueprints.user.service import UserService
-from app.blueprints.reservation.service import ReservationService
+from app.blueprints.reservation.service import ReservationService, StatusEnum
 
 from apiflask import HTTPError
 from apiflask.fields import String, Email, Nested, Integer, List
@@ -93,3 +93,12 @@ def user_update_password(json_data):
         return str(response), 200
     raise HTTPError(message=response, status_code=400)
 
+@bp.post('/reservation/cancel/<int:reservation_id>')
+@bp.auth_required(auth)
+@bp.doc(tags=["user"], description="Cancel a reservation by ID")
+@role_required(["User", "Receptionist", "Administrator"])
+def cancel_reservation(reservation_id):
+    success, response = ReservationService.set_reservation_status(reservation_id, StatusEnum.Cancelled)
+    if success:
+        return str(response), 200
+    raise HTTPError(message=response, status_code=400)

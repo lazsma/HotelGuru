@@ -22,6 +22,16 @@ export default function Header() {
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
             <div className="userSection">
+                <div className="header-actions">
+                    <button
+                        type="button"
+                        className="header-button header-button-primary"
+                        onClick={() => navigate("/hotels")}
+                        aria-label="Hotel megnyitása"
+                    >
+                        Hotelek
+                    </button>
+                </div>
                 {canOpenReception && (<div className="header-actions">
                     <button
                         type="button"

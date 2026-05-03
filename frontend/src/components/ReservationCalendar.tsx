@@ -51,7 +51,7 @@ export default function ReservationCalendar({
     const isDateBooked = (day: number): boolean => {
         const dateStr = new Date(year, month, day).toISOString().split("T")[0];
         return reservations.some((res) => {
-            if (res.status === "cancelled") return false;
+            if (res.status === "StatusEnum.Cancelled") return false;
             return dateStr >= res.check_in_date && dateStr < res.check_out_date;
         });
     };

@@ -39,6 +39,7 @@
   color: var(--text-h);
   font-weight: 600;
   margin: auto;
+  width: 60%;
 }
 
 .login-field input {

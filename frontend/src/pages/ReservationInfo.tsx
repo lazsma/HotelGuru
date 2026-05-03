@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import type { Room, User } from "../types";
+import { useAuth } from "../components/AuthContext";
 
 import { convertReservationEnum } from "../utility/Converter";
 import "./ReservationInfo.css";
@@ -13,6 +14,8 @@ export default function ReservationInfo() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { user } = useOutletContext<{ user: User }>();
+    const { token } = useAuth();
+
     
     useEffect(() => {
         const passedReservation = location.state?.reservation;
@@ -33,8 +36,11 @@ export default function ReservationInfo() {
         if (!confirmCancel) return;
 
         try {
-            const response = await fetch(`/api/reservation/status/set/cancelled/${id}`, {
-                method: "POST"
+            const response = await fetch(`/api/user/reservation/cancel/${id}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             if (!response.ok) {
