@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+Ôªøfrom flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 
 class Base(DeclarativeBase):
@@ -8,6 +8,6 @@ db = SQLAlchemy(model_class = Base)
 
 
 
-#Authentik·ciÛ
+#Authentik√°ci√≥
 from apiflask import HTTPTokenAuth
 auth = HTTPTokenAuth()

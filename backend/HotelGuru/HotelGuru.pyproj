@@ -33,6 +33,10 @@
     <Compile Include="HotelGuru\app\blueprints\hotel\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\service.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\receptionist\routes.py" />
+    <Compile Include="HotelGuru\app\blueprints\receptionist\schemas.py" />
+    <Compile Include="HotelGuru\app\blueprints\receptionist\service.py" />
+    <Compile Include="HotelGuru\app\blueprints\receptionist\__init__.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\reservation\service.py" />
@@ -64,6 +68,7 @@
     <Folder Include="HotelGuru\app\" />
     <Folder Include="HotelGuru\app\blueprints\" />
     <Folder Include="HotelGuru\app\blueprints\hotel\" />
+    <Folder Include="HotelGuru\app\blueprints\receptionist\" />
     <Folder Include="HotelGuru\app\blueprints\room\" />
     <Folder Include="HotelGuru\app\blueprints\reservation\" />
     <Folder Include="HotelGuru\app\blueprints\user\" />
@@ -85,17 +90,8 @@
   <ItemGroup>
     <Interpreter Include="env\">
       <Id>env</Id>
-      <Version>0.0</Version>
-      <Description>env (Python 3.14.3)</Description>
-      <InterpreterPath>Scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>X64</Architecture>
-    </Interpreter>
-    <Interpreter Include="env_python_313\">
-      <Id>env_python_313</Id>
-      <Version>3.13</Version>
-      <Description>env_python_313 (Python 3.13)</Description>
+      <Version>3.14</Version>
+      <Description>env (Python 3.14.4)</Description>
       <InterpreterPath>Scripts\python.exe</InterpreterPath>
       <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
