@@ -36,7 +36,7 @@ function BookReservation() {
     // Ellenőrzi, hogy egy adott nap foglalt-e
     const isDateBooked = (date: string): boolean => {
         return reservations.some((res) => {
-            if (res.status === "cancelled") return false;
+            if (res.status === "StatusEnum.Cancelled") return false;
             return date >= res.check_in_date && date < res.check_out_date;
         });
     };
