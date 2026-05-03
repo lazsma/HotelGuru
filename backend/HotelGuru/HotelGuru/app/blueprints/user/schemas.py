@@ -31,6 +31,9 @@ class UserResponseSchema(Schema):
     name = fields.String()
     szemely_igazolvany_szam=fields.Integer()
     email = fields.String()
+    phone = fields.String()
+    hotel_id = fields.Integer(allow_none=True)
+    roles = fields.List(fields.Nested(RoleSchema))
     address = fields.Nested(AddressSchema)
     token = fields.String()
  

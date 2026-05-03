@@ -6,6 +6,7 @@ type AuthContextValue = {
   token: string | null;
   user: User | null;
   loginUser: (newToken: string, user: User) => void;
+  updateUser: (updatedUser: User) => void;
   logoutUser: () => void;
 };
 
@@ -24,6 +25,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
   }
 
+  function updateUser(updatedUser: User) {
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  }
+
   function logoutUser() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -32,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token, user, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ token, user, loginUser, updateUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

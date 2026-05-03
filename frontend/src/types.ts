@@ -16,6 +16,18 @@ export interface User {
     profileImage?: string;
     email: string;
     id: number;
+    hotel_id?: number | null;
+    phone?: string;
+    szemely_igazolvany_szam?: number;
+    roles?: Array<{
+        id: number;
+        name: string;
+    }>;
+    address?: {
+        city?: string;
+        street?: string;
+        postalcode?: number;
+    };
 }
 
 export interface Reservation {

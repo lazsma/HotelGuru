@@ -61,7 +61,12 @@ export default function LoginPage() {
             const loggedInUser: User = {
                 id: data.id,
                 name: data.name ?? data.email ?? "Felhasználó",
-                email: data.email
+                email: data.email,
+                phone: data.phone,
+                szemely_igazolvany_szam: data.szemely_igazolvany_szam,
+                hotel_id: data.hotel_id,
+                roles: data.roles,
+                address: data.address
             };
 
             loginUser(data.token, loggedInUser);

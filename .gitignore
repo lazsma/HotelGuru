@@ -210,3 +210,6 @@ __marimo__/
 *.vs*
 *.user
 backend/HotelGuru/obj/*
+
+# Database file
+*app.db
