@@ -20,7 +20,10 @@ export interface User {
 
 export interface Reservation {
     id: number;
+    room_id: number;
     check_in_date: string;
     check_out_date: string;
+    people: number;
     status: string;
+    reservation_datetime?: string;
 }

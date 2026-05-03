@@ -86,6 +86,7 @@ export default function LoginPage() {
                 <label className="login-field">
                     <span>Email</span>
                     <input
+                        name="user"
                         type="email"
                         placeholder="pelda@email.com"
                         value={email}
@@ -97,6 +98,7 @@ export default function LoginPage() {
                 <label className="login-field">
                     <span>Jelszó</span>
                     <input
+                        name="password"
                         type="password"
                         placeholder="Jelszó"
                         value={password}

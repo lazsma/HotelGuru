@@ -19,7 +19,17 @@ export default function Header() {
             <h1 className="header-title" onClick={() => navigate("/")}>Hotel Guru</h1>
 
             <div className="userSection">
-                <button className="header-button" onClick={() => navigate("/reception")}>Recepció</button>
+                <div className="header-actions">
+                    <button
+                        type="button"
+                        className="header-button header-button-primary"
+                        onClick={() => navigate("/reception")}
+                        aria-label="Recepció megnyitása"
+                    >
+                        Recepció
+                    </button>
+                </div>
+
                 <p className="header-user-name" onClick={() => navigate(user ? "/profile" : "/login")}>
                     {user?.name ?? "Bejelentkezés"}
                 </p>
@@ -32,7 +42,12 @@ export default function Header() {
                 />
 
                 {user && (
-                    <button className="header-button header-button-secondary" onClick={handleLogout}>
+                    <button
+                        type="button"
+                        className="header-button header-button-secondary"
+                        onClick={handleLogout}
+                        aria-label="Kijelentkezés"
+                    >
                         Kijelentkezés
                     </button>
                 )}
