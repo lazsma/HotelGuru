@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Reservation, Room } from "../types";
 
+import type { Reservation, Room } from "../types";
 import { convertReservationEnum } from "../utility/Converter";
+import { useAuth } from "../components/AuthContext";
 import "./Profile.css";
 
 export default function Profile() {
+    const { user } = useAuth();
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [rooms, setRooms] = useState<Map<number, Room>>(new Map());
     const [loading, setLoading] = useState(true);
@@ -15,7 +17,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchReservations = async () => {
             try {
-                const response = await fetch("/api/reservation/list/1"); // TODO: use logged in user id
+                const response = await fetch(`/api/reservation/list/${user?.id}`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch reservations");

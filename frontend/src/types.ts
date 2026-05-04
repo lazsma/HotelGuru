@@ -14,8 +14,8 @@ export interface Room {
 export interface User {
     name: string;
     profileImage?: string;
-    email?: string;
-    id?: number;
+    email: string;
+    id: number;
 }
 
 export interface Reservation {
@@ -25,5 +25,5 @@ export interface Reservation {
     check_out_date: string;
     people: number;
     status: string;
-    reservation_datetime?: string;
+    reservation_datetime: string;
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
 import type { Room, User, Reservation } from "../types";
-import ReservationCalendar from "../components/ReservationCalendar";
+import ReservationCalendar, { isDateBooked } from "../components/ReservationCalendar";
 
 import "./BookReservation.css";
 
@@ -25,21 +25,13 @@ function BookReservation() {
     const [roomData, setRoomData] = useState<Room | null>(null);
     const [loadingRoom, setLoadingRoom] = useState<boolean>(false);
     const [reservations, setReservations] = useState<Reservation[]>([]);
-    const [dateError, setDateError] = useState<string>("");
+    const [bookingError, setBookingError] = useState<string>("");
 
     const roomCapacity = Number((roomData as { capacity?: number })?.capacity ?? 1)
 
     const navigate = useNavigate();
     const { roomId } = useParams<{ roomId: string }>();
     const { user } = useOutletContext<{ user: User }>();
-
-    // Ellenőrzi, hogy egy adott nap foglalt-e
-    const isDateBooked = (date: string): boolean => {
-        return reservations.some((res) => {
-            if (res.status === "cancelled") return false;
-            return date >= res.check_in_date && date < res.check_out_date;
-        });
-    };
 
     // Ellenőrzi, hogy egy dátumtartomány szabad-e
     const isDateRangeAvailable = (checkIn: string, checkOut: string): boolean => {
@@ -48,7 +40,7 @@ function BookReservation() {
 
         while (current < end) {
             const dateStr = current.toISOString().split("T")[0];
-            if (isDateBooked(dateStr)) {
+            if (isDateBooked(new Date(dateStr), reservations)) {
                 return false;
             }
             current.setDate(current.getDate() + 1);
@@ -135,61 +127,38 @@ function BookReservation() {
             check_in_date: checkIn,
             check_out_date: checkOut
         }));
-        setDateError("");
+        setBookingError("");
     };
+
+    const setPeople = (people: number) => {
+        setFormData((prev) => ({
+            ...prev,
+            people: Math.min(Math.max(people, 1), roomCapacity)
+        }));
+    }
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        setDateError("");
-
-        setFormData((prev) => {
-            let updated = {
-                ...prev,
-                [name]: name === "people"
-                    ? Math.min(Math.max(Number(value) || 1, 1), roomCapacity)
-                    : value
-            };
-
-            if (name === "check_in_date") {
-                if (updated.check_out_date && updated.check_out_date <= value) {
-                    updated.check_out_date = getNextDay(value);
-                }
-
-                // Ellenőrizzük, hogy az új dátumtartomány szabad-e
-                if (!isDateRangeAvailable(value, updated.check_out_date)) {
-                    setDateError("A kiválasztott időszak nem teljesen elérhető. Válasszon másik dátumokat.");
-                }
-            }
-
-            if (name === "check_out_date") {
-                // Ellenőrizzük, hogy az új dátumtartomány szabad-e
-                if (!isDateRangeAvailable(updated.check_in_date, value)) {
-                    setDateError("A kiválasztott időszak nem teljesen elérhető. Válasszon másik dátumokat.");
-                }
-            }
-
-            return updated;
-        });
+        if (name === "people") {
+            setPeople(Number(value) || 1);
+        }
     };
 
     const handlePeopleChange = (change: number) => {
-        setFormData((prev) => ({
-            ...prev,
-            people: Math.min(Math.max((Number(prev.people) || 1) + change, 1), roomCapacity)
-        }));
+        setPeople((Number(formData.people) || 1) + change);
     };
 
-    async function create_reservation(event: any) {
+    async function createReservation(event: any) {
         event.preventDefault();
 
         // Végső ellenőrzés a submit előtt
         if (!isDateRangeAvailable(formData.check_in_date, formData.check_out_date)) {
-            setDateError("A kiválasztott időszak nem teljesen elérhető. Válasszon másik dátumokat.");
+            setBookingError("A kiválasztott időszak nem teljesen elérhető. Válasszon másik dátumokat.");
             return;
         }
 
         if (formData.people < 1 || formData.people > roomCapacity) {
-            setDateError(`Az emberek száma 1 és ${roomCapacity} között lehet.`);
+            setBookingError(`Az emberek száma 1 és ${roomCapacity} között lehet.`);
             return;
         }
 
@@ -207,8 +176,12 @@ function BookReservation() {
 
         return fetch('/api/reservation/create', requestOptions)
             .then(response => response.json())
+            .catch(err => {
+                console.error("Hiba a foglalás létrehozásakor:", err);
+                setBookingError("Hiba történt a foglalás létrehozásakor. Kérjük, próbálja újra.");
+                throw err;
+            })
             .then(response => navigate("/bookinfo", { state: { reservation: response, room: roomData } }))
-            .then(response => console.log(response))
     }
 
     return (
@@ -220,7 +193,7 @@ function BookReservation() {
             
             {loadingRoom && <div>Szoba adatok betöltése...</div>}
             
-            {dateError && <div style={{ color: 'red', marginBottom: '10px', padding: '10px', backgroundColor: '#ffe6e6', borderRadius: '4px' }}>{dateError}</div>}
+            {bookingError && <div className="booking-error">{bookingError}</div>}
             
             {roomData && (
                 <div className="room-details">
@@ -239,7 +212,7 @@ function BookReservation() {
                 selectedCheckOut={formData.check_out_date}
             />
             
-            <form id="reservation-form" onSubmit={create_reservation}>
+            <form id="reservation-form" onSubmit={createReservation}>
                 <div className="reservation-row people-selector-row">
                     {(roomCapacity > 1) && 
                         <div className="people-selector">
@@ -250,7 +223,7 @@ function BookReservation() {
                                 disabled={formData.people <= 1}
                                 aria-label="Vendégek számának csökkentése"
                             >
-                                −
+                                -
                             </button>
 
                             <input

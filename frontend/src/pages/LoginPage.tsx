@@ -5,6 +5,7 @@ import type { User } from "../types";
 import "./LoginPage.css";
 
 type LoginLocationState = {
+    message?: string;
     from?: {
         pathname?: string;
         search?: string;
@@ -17,7 +18,7 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
-    const { from } = (location.state ?? {}) as LoginLocationState;
+    const { from, message } = (location.state ?? {}) as LoginLocationState;
     const redirectParam = searchParams.get("redirect");
     const stateRedirectPath = `${from?.pathname ?? "/"}${from?.search ?? ""}${from?.hash ?? ""}`;
     const redirectPath = redirectParam?.startsWith("/") && !redirectParam.startsWith("//")
@@ -82,6 +83,7 @@ export default function LoginPage() {
                 </div>
 
                 {error && <p className="login-error">{error}</p>}
+                {message && <p className="login-success">{message}</p>}
 
                 <label className="login-field">
                     <span>Email</span>
@@ -109,6 +111,14 @@ export default function LoginPage() {
 
                 <button className="login-submit" type="submit" disabled={isSubmitting}>
                     {isSubmitting ? "Bejelentkezés..." : "Bejelentkezés"}
+                </button>
+
+                <button
+                    className="login-link-button"
+                    type="button"
+                    onClick={() => navigate("/register")}
+                >
+                    Új felhasználó regisztrálása
                 </button>
             </form>
         </section>

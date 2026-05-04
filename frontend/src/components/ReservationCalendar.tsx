@@ -12,6 +12,15 @@ interface ReservationCalendarProps {
     selectedRoom?: Room | null;
 }
 
+// Ellenőrzi, hogy egy adott nap foglalt-e
+export function isDateBooked(date: Date, reservations: Reservation[]): boolean {
+    const dateStr = date.toISOString().split("T")[0];
+    return reservations.some((res) => {
+        if (res.status === "StatusEnum.Cancelled") return false;
+        return dateStr >= res.check_in_date && dateStr <= res.check_out_date;
+    });
+};
+
 export default function ReservationCalendar({
     reservations,
     currentMonth = new Date(),
@@ -47,15 +56,6 @@ export default function ReservationCalendar({
     // A hónapban lévő napok száma
     const daysInMonth = lastDay.getDate();
 
-    // Ellenőrzi, hogy egy adott nap foglalt-e
-    const isDateBooked = (day: number): boolean => {
-        const dateStr = new Date(year, month, day).toISOString().split("T")[0];
-        return reservations.some((res) => {
-            if (res.status === "cancelled") return false;
-            return dateStr >= res.check_in_date && dateStr < res.check_out_date;
-        });
-    };
-
     // Ellenőrzi, hogy egy nap a kiválasztott tartományban van-e
     const isInSelectedRange = (day: number): boolean => {
         if (!tempCheckIn || !tempCheckOut) return false;
@@ -71,7 +71,7 @@ export default function ReservationCalendar({
         if (dateStr < today) return;
 
         // Nem lehet foglalt napot választani
-        if (isDateBooked(day)) return;
+        if (isDateBooked(new Date(year, month, day), reservations)) return;
 
         if (selectionMode === "check-in") {
             setTempCheckIn(dateStr);
@@ -234,7 +234,7 @@ export default function ReservationCalendar({
                     }
 
                     const dateStr = new Date(year, month, day).toISOString().split("T")[0];
-                    const isBooked = isDateBooked(day);
+                    const isBooked = isDateBooked(new Date(year, month, day), reservations);
                     const isToday = dateStr === today;
                     const isPast = dateStr < today;
                     const isCheckIn = dateStr === tempCheckIn;

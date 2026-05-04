@@ -10,6 +10,7 @@ import ReceptionDashboard from './pages/ReceptionDashboard';
 import LoginProtectedRoute from "./components/LoginProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/bookinfo" element={<ReservationInfo />} />
           <Route path="/hotel/:hotelId/rooms" element={<RoomList />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
           <Route element={<LoginProtectedRoute />}>
             <Route path="/profile" element={<Profile />} />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './ReceptionDashboard.css';
+import { convertReservationEnum } from '../utility/Converter';
 
 export default function ReceptionDashboard() {
     const [reservations, setReservations] = useState<any[]>([]);
@@ -62,18 +63,6 @@ export default function ReceptionDashboard() {
         }
     };
 
-    const formatStatus = (statusStr: string) => {
-        if (!statusStr) return "";
-        const cleanStatus = statusStr.replace("StatusEnum.", "");
-        
-        switch(cleanStatus) {
-            case 'New': return 'Új';
-            case 'Approved': return 'Jóváhagyva';
-            case 'Cancelled': return 'Törölve';
-            default: return cleanStatus;
-        }
-    };
-
 return (
         <div className="reception-dashboard">
             <h2>Recepciós Pult - Foglalások kezelése</h2>
@@ -97,7 +86,7 @@ return (
                             <td>Room ID: {res.room_id}</td>
                             <td>{res.check_in_date}</td>
                             <td>{res.check_out_date}</td>
-                            <td><strong>{formatStatus(res.status)}</strong></td>
+                            <td><strong>{convertReservationEnum(res.status)}</strong></td>
                             <td className="action-buttons">
                                 {(res.status === 'New' || res.status === 'StatusEnum.New') && (
                                     <button className="btn btn-approve" onClick={() => handleStatusChange(res.id, 'Approved')}>
