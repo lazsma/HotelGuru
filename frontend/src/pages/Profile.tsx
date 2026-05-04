@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthContext";
 
 import type { Reservation, Room, User } from "../types";
 import { convertReservationEnum } from "../utility/Converter";
