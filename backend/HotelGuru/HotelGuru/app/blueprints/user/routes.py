@@ -102,3 +102,8 @@ def cancel_reservation(reservation_id):
     if success:
         return str(response), 200
     raise HTTPError(message=response, status_code=400)
+
+@bp.get('/profile/<int:user_id>')
+def get_profile(user_id):
+    """Szemelyes adatok megtekintese"""
+    return {"id": user_id, "name": "Teszt Vendeg", "email": "teszt@email.com"}
