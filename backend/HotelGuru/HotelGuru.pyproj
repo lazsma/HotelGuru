@@ -17,7 +17,7 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>HotelGuru</Name>
     <RootNamespace>HotelGuru</RootNamespace>
-    <InterpreterId>MSBuild|env3|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
     <WebBrowserPort>8888</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -32,6 +32,7 @@
     <Compile Include="HotelGuru\app\blueprints\admin\routes.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HotelGuru\app\blueprints\admin\__init__.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\hotel\service.py" />
