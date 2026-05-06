@@ -30,6 +30,16 @@ def user_login(json_data):
         return response, 200
     raise HTTPError(message=response, status_code=400)
 
+@bp.get('/me')
+@bp.auth_required(auth)
+@bp.doc(tags=["user"])
+@bp.output(UserResponseSchema)
+def user_me():
+    success, response = UserService.get_user_profile(auth.current_user.get("user_id"))
+    if success:
+        return response, 200
+    raise HTTPError(message=response, status_code=400)
+
 # Minden role kilistazasa, csak aki neke van (Admin es User) hozzaferese
 @bp.get('/roles')
 @bp.auth_required(auth) 
@@ -75,7 +85,7 @@ def user_list_user_roles_by_hotel():
 @bp.input(UserRequestSchema, location="json")
 @bp.output(UserResponseSchema)
 def user_update_szemelyes(json_data):
-    success, response = UserService.user_update_szemelyes(auth.current_user.get("id"),json_data)
+    success, response = UserService.user_update_szemelyes(auth.current_user.get("user_id"),json_data)
     if success:
         return str(response), 200
     raise HTTPError(message=response, status_code=400)
@@ -88,7 +98,7 @@ def user_update_szemelyes(json_data):
 @bp.input(UserRequestSchema, location="json")
 @bp.output(UserResponseSchema)
 def user_update_password(json_data):
-    success, response = UserService.user_update_password(auth.current_user.get("id"),json_data)
+    success, response = UserService.user_update_password(auth.current_user.get("user_id"),json_data)
     if success:
         return str(response), 200
     raise HTTPError(message=response, status_code=400)

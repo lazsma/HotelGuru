@@ -36,11 +36,9 @@ def role_required(roles):
         return decorated_function
     return wrapper
 
-# Register role
+# Register user
 from app.blueprints.user import bp as bp_user
 bp.register_blueprint(bp_user, url_prefix='/user')
-
-# Register address
 
 # Register hotel
 from app.blueprints.hotel import bp as bp_hotel
@@ -53,10 +51,6 @@ bp.register_blueprint(bp_reservation, url_prefix='/reservation')
 # Register room
 from app.blueprints.room import bp as bp_room
 bp.register_blueprint(bp_room, url_prefix='/room')
-
-# Register user
-from app.blueprints.user import bp as bp_user
-bp.register_blueprint(bp_user, url_prefix='/user')
 
 # Register admin
 from app.blueprints.admin import bp as bp_admin

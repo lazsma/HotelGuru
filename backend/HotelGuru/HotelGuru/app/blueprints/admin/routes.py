@@ -1,9 +1,8 @@
 from apiflask import APIBlueprint as Blueprint
 
+from app.blueprints.admin import bp
 from app.models.room import Room
 from app.extensions import db
-
-bp = Blueprint('admin', __name__)
 
 @bp.patch('/room/<int:room_id>/equipment')
 def update_room_equipment(room_id):
