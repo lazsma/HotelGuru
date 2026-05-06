@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import RegisterPage from "./pages/RegisterPage";
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/hotels" element={<HotelList />} />
           <Route path="/bookinfo" element={<ReservationInfo />} />
+          
           <Route path="/hotel/:hotelId/rooms" element={<RoomList />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

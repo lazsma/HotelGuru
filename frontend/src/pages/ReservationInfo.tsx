@@ -15,6 +15,7 @@ export default function ReservationInfo() {
     const navigate = useNavigate();
     const { user } = useOutletContext<{ user: User }>();
     const { token } = useAuth();
+   
 
     
     useEffect(() => {
@@ -30,6 +31,7 @@ export default function ReservationInfo() {
     }, [location.state]);
 
     const handleCancel = async (id: number) => {
+        
         const confirmCancel = window.confirm(
         "Are you sure you want to cancel this reservation?"
         );
@@ -51,6 +53,14 @@ export default function ReservationInfo() {
         } catch (err: any) {
             console.log(err);
         }
+    };
+
+    const CancelProtect =(reservation: string) => {
+        const today = new Date();
+        const reservation_date=new Date(reservation);
+        var diff=((reservation_date.getTime())-(today.getTime()))/1000/60/60;//Órába váltás
+
+        return diff>24        
     };
 
     if (error || loading) 
@@ -114,7 +124,9 @@ export default function ReservationInfo() {
 
             <div>
                 <button className="reservation-button" onClick={() => navigate("/profile")}>Reservations</button>
-                <button className="reservation-button" onClick={() => handleCancel(reservation.id)}>Cancel</button>
+                 {CancelProtect(reservation.check_in_date) &&(
+                    <button className="reservation-button" onClick={() => handleCancel(reservation.id)}>Cancel</button>)}
+                
             </div>
         </div>
     );

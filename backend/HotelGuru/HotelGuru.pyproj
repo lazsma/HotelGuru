@@ -49,6 +49,18 @@
     <Compile Include="HotelGuru\app\blueprints\room\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\room\service.py" />
     <Compile Include="HotelGuru\app\blueprints\room\__init__.py" />
+    <Compile Include="HotelGuru\app\blueprints\services\routes.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotelGuru\app\blueprints\services\schemas.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotelGuru\app\blueprints\services\service.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotelGuru\app\blueprints\services\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HotelGuru\app\blueprints\user\routes.py" />
     <Compile Include="HotelGuru\app\blueprints\user\schemas.py" />
     <Compile Include="HotelGuru\app\blueprints\user\service.py" />
@@ -60,6 +72,9 @@
     <Compile Include="HotelGuru\app\models\reservation.py" />
     <Compile Include="HotelGuru\app\models\role.py" />
     <Compile Include="HotelGuru\app\models\room.py" />
+    <Compile Include="HotelGuru\app\models\service.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HotelGuru\app\models\user.py" />
     <Compile Include="HotelGuru\app\models\__init__.py" />
     <Compile Include="HotelGuru\app\__init__.py" />
@@ -73,6 +88,7 @@
     <Folder Include="HotelGuru\app\blueprints\" />
     <Folder Include="HotelGuru\app\blueprints\hotel\" />
     <Folder Include="HotelGuru\app\blueprints\admin\" />
+    <Folder Include="HotelGuru\app\blueprints\services\" />
     <Folder Include="HotelGuru\app\blueprints\receptionist\" />
     <Folder Include="HotelGuru\app\blueprints\user\" />
     <Folder Include="HotelGuru\app\blueprints\room\" />

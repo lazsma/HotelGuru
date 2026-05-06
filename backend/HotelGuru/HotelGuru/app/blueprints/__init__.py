@@ -60,4 +60,9 @@ bp.register_blueprint(bp_admin, url_prefix='/admin')
 from app.blueprints.receptionist import receptionist_bp
 bp.register_blueprint(receptionist_bp, url_prefix='/receptionist')
 
+
+# Register service
+from app.blueprints.services import services_bp
+bp.register_blueprint(services_bp, url_prefix='/services')
+
 from app.models import *

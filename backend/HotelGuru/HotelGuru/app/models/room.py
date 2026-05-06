@@ -4,6 +4,8 @@ from sqlalchemy import ForeignKey, Boolean, Float, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import String, Integer
 from typing import List
+from app.models.roomservice import RoomService
+
 
 class Room(db.Model):
     __tablename__ = "rooms"
@@ -40,6 +42,8 @@ class Room(db.Model):
 
     # Kapcsolat a Foglalásokkal
     reservations: Mapped[List["Reservation"]] = relationship(back_populates="room", lazy=True)
+
+    services: Mapped[List["Service"]] = relationship(secondary=RoomRoomService, back_populates="rooms")
 
     def __repr__(self) -> str:
         return f"Room(id={self.id}, number={self.room_number!r}, type={self.room_type!r})"
