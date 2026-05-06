@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 from apiflask.validators import OneOf
+from apiflask.fields import Integer, String, Float,Boolean, List,Nested
 from enum import Enum
 
 # Enumok a szobatípusokhoz és szolgáltatásokhoz
@@ -8,11 +9,11 @@ class RoomType(str, Enum):
     TWIN = "Kétágyas"
     DOUBLE = "Duplaágyas"
 
-class RoomServiceEnum(str, Enum):
-    WELLNESS = "Wellness"
-    MASSAGE = "Masszázs"
-    ROOM_SERVICE = "Szobaszerviz"
-    MINIBAR = "Minibár"
+class ServiceSchema(Schema):
+    id: fields.Integer
+    name: fields.String
+    price:fields.Float
+    active:fields.Boolean
 
 class RoomRequestSchema(Schema):
     is_available = fields.Boolean(load_default=True)
@@ -25,7 +26,7 @@ class RoomRequestSchema(Schema):
     hotel_id = fields.Integer(required=True)
     capacity = fields.Integer(required=True)
     # Generikus szolgáltatások listaként (opcionális)
-    services = fields.List(fields.String(validate=OneOf([e.value for e in RoomServiceEnum])), allow_none=True)
+    services = fields.List(fields.Nested(ServiceSchema))
 
 class RoomResponseSchema(Schema):
     id = fields.Integer()
@@ -38,7 +39,7 @@ class RoomResponseSchema(Schema):
     room_type = fields.String()
     hotel_id = fields.Integer()
     capacity = fields.Integer()
-    services = fields.List(fields.String())
+    services = fields.List(fields.Nested(ServiceSchema))
 
 # Sémák a részleges frissítésekhez (update és status)
 class RoomUpdateDetailsSchema(Schema):

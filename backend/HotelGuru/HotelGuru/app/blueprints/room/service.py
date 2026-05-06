@@ -1,8 +1,9 @@
 from app.extensions import db
-from app.blueprints.room.schemas import RoomResponseSchema
-from app.models.room import Room
+from app.blueprints.room.schemas import RoomResponseSchema,ServiceSchema
 from app.blueprints.reservation.schemas import ReservationResponseSchema
 from app.models.reservation import Reservation
+from app.models.service import Service
+from app.models.room import Room
 from sqlalchemy import select
 
 class RoomService:
@@ -68,3 +69,13 @@ class RoomService:
             return True, ReservationResponseSchema().dump(reservations, many = True)
         except Exception as ex:
             return False, f"get_room_reservations() error! ({str(ex)})"
+
+    @staticmethod
+    def get_room_service(room_id):
+        try:
+            service = db.session.execute( select(Service).filter(Service.room_id == room_id)).scalars()
+            if not service:
+                return False, "No service found for this room"
+            return True, ServiceSchema().dump(service, many = True)
+        except Exception as ex:
+            return False, f"get_room_service() error! ({str(ex)})"
